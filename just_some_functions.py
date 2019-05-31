@@ -2,8 +2,12 @@ import numpy as np
 import scipy
 import statsmodels.api as sm
 import pandas as pd
+import seaborn as sns
 
-from math import gamma
+from math import gamma, lgamma
+from scipy.stats import beta
+from numba import jit
+
 
 
 def factorial(n):
@@ -51,9 +55,9 @@ def tweedie(n, p, phi, mu):
     lambdaa = mu ** (2-p)
 
 
+
+
 # Lemma: calculate probabilities
-from math import lgamma
-from numba import jit
 
 @jit
 def h(a, b, c, d):
@@ -63,7 +67,7 @@ def h(a, b, c, d):
 
 @jit
 def g0(a, b, c):
-    return (lgamma(a + c) + lgamma(a + c) - lgamma(a + b + c) + lgamma(a)
+    return (lgamma(a + c) + lgamma(a + c) - lgamma(a + b + c) + lgamma(a))
 
 @jit
 def h_iter(a, b, c, d):
@@ -77,39 +81,36 @@ def g(a, b, c, d):
 def calculate_probabilities(beta1, beta2):
     return g(beta1.args[0], beta1.args[1], beta2.args[0], beta2.args[1])
 
-#A/B Test
-from scipy.stats import beta
+def A_B_test(impressions_control_number, conversions_control_number, impressions_test_number, conversions_test_number):
 
-import pandas as pd
-import seaborn as sns
-import numpy as np
+    '''
+    relate whatever text to a numerical value in control and test sets 
+    worst case scenario can be done via dataframe/index
+    '''
 
-'''
-relate whatever text to a numerical value in control and test sets 
-worst case scenario can be done via dataframe/index
-'''
+    impressions_control, conversions_control = impressions_control_number, conversions_control_number
+    impressions_test, conversions_test = impressions_test_number, conversions_test_number
 
-impressions_control, conversions_control = impressions control number, converstions control number
-impressions_test, conversions_test = impressions test number, conversions test number
+    a_control, b_control = conversions_control, impressions_control - conversions_control + 1
+    beta_control = beta(a_control, b_control)
+    a_test, b_test = conversions_test, impressions_test - conversions_test + 1
+    beta_test = beta(a_test, b_test)
 
-a_control, b_control = converstions_control, impressions_control - conversions_control + 1
-beta_control = beta(a_control, b_control)
-a_test, b_test = conversions_test, impressions_test - conversions_test + 1
-beta_test = beta(a_test, b_test)
-
-lift = (beta_test.mean() - beta_control.mean()) / beta_control.mean()
-probability = calculate_probablities(beta_test, beta_control)
+    lift = (beta_test.mean() - beta_control.mean()) / beta_control.mean()
+    probability = calculate_probabilities(beta_test, beta_control)
+    
+    return lift, probability
 
 
-# for visuals
-values_control = np.random.beta(a_control, b_control, 1e6)
-values_test = np.random.beta(a_control, b_control, 1e6)
-values = np.vstack([values_control, values_test]).T
+    # uncomment for visuals
+    # values_control = np.random.beta(a_control, b_control, 1e6)
+    # values_test = np.random.beta(a_control, b_control, 1e6)
+    # values = np.vstack([values_control, values_test]).T
 
-limit = 4e-4
+    # limit = 4e-4
 
-data_frame = pd.Dataframe(values, columns = ['Control', 'Test'])
-data_frame = data_frame[data_frame['Control']<limit]
-data_frame = data_frame[data_frame['Test']<limit]
-graphs = sns.jointplot(x = data_frame.Control, y = data_frame.Test, kind = kde, levels = 20)
-graphs.ax_joint.plot([2e-4, limit], [2e-4, limit]) 
+    # data_frame = pd.Dataframe(values, columns = ['Control', 'Test'])
+    # data_frame = data_frame[data_frame['Control']<limit]
+    # data_frame = data_frame[data_frame['Test']<limit]
+    # graphs = sns.jointplot(x = data_frame.Control, y = data_frame.Test, kind = 'kde', levels = 20)
+    # graphs.ax_joint.plot([2e-4, limit], [2e-4, limit]) 
