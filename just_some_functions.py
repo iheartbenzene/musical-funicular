@@ -33,7 +33,7 @@ class NegativeBinomial(Poisson, Gamma):
         The mean of the distribution, mu.
         '''
 
-        mu = np.exp(nu)
+        mu = (k * np.exp(nu)) / (1 - np.exp(nu))
         p = r / (mu + r)
         q = mu / (mu + r)
         return (gamma(k+r)/(factorial(k)*gamma(r))) * (p**r) * (q**k)
