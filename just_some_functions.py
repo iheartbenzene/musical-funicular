@@ -56,9 +56,9 @@ def tweedie(n, p, phi, mu):
     alpha = (2-p)/(1-p)
     gam = phi * (p-1) * (mu ** (p-1))
     N = np.random.poisson(labmdaa, n)
-    for i in range():
-        pass
-
+    for i in range(n):
+        rt[i] = np.random.gamma(N[i] * np.abs(alpha), gam, 1)
+    return rt
 
 
 
