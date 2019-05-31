@@ -108,7 +108,7 @@ values = np.vstack([values_control, values_test]).T
 
 limit = 4e-4
 
-data_frame = pd.Dataframe(values, columns = ['Control', 'Test']
+data_frame = pd.Dataframe(values, columns = ['Control', 'Test'])
 data_frame = data_frame[data_frame['Control']<limit]
 data_frame = data_frame[data_frame['Test']<limit]
 graphs = sns.jointplot(x = data_frame.Control, y = data_frame.Test, kind = kde, levels = 20)
