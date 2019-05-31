@@ -11,16 +11,17 @@ def factorial(n):
         return 1
     return n * factorial(n-1)
 
-def negative_binomial(successes, failures, trials):
+# def probability_of_success(failures, mean_value):
+#     '''
+#     Using the probability of success for a Poisson distribution.
+#     ''' 
+#     return mean_value / (failures + mean_value)
+
+def negative_binomial(successes, failures, mu):
     '''
     The number of sucesses.
     The number of failures.
-    The number of trials.
+    The mean of the distribution, mu.
     '''
-    return (gamma(trials) / (factorial(successes)*gamma(failures))) * (probability_of_success(successes, trials) ** failures) * ((1-probability_of_success(successes, trials)) ** successes)
 
-def probability_of_success(successes, trials):
-    '''
-    The number of successes in the number of trials
-    '''
-    return successes / trials
+    return (gamma(successes + failures) / (factorial(successes)*gamma(failures))) * ((failures / (mu + failures)) ** failures) * ((mu / (mu + failures)) ** successes)
