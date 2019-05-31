@@ -11,8 +11,16 @@ def factorial(n):
         return 1
     return n * factorial(n-1)
 
-def negative_binomial(k, r, p):
-    return (gamma(k + r) / (factorial(k)*gamma(r))) * (p ** r) * ((1-p) ** k)
+def negative_binomial(successes, failures, trials):
+    '''
+    The number of sucesses.
+    The number of failures.
+    The number of trials.
+    '''
+    return (gamma(trials) / (factorial(successes)*gamma(failures))) * (probability_of_success(successes, trials) ** failures) * ((1-probability_of_success(successes, trials)) ** successes)
 
-def probability_of_success():
-    pass
+def probability_of_success(successes, trials):
+    '''
+    The number of successes in the number of trials
+    '''
+    return successes / trials
