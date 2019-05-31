@@ -26,7 +26,7 @@ class NegativeBinomial(Poisson, Gamma):
     has a Gamma distributed mean.
 
     '''
-    def negative_binomial(self, k, r, nu):
+    def negative_binomial(self, k, y, nu):
         '''
         The number of sucesses.
         The number of failures.
@@ -34,9 +34,14 @@ class NegativeBinomial(Poisson, Gamma):
         '''
 
         mu = (k * np.exp(nu)) / (1 - np.exp(nu))
-        p = r / (mu + r)
-        q = mu / (mu + r)
-        return (gamma(k+r)/(factorial(k)*gamma(r))) * (p**r) * (q**k)
+
+        var = mu * (mu ** 2) / k
+
+        q = mu / (mu + k)
+
+        p = k / (k + mu)
+
+        return (gamma(k+y)/(factorial(k)*gamma(y))) * p * (q ** y)
 
 
 def tweedie(n, p, phi, mu):
