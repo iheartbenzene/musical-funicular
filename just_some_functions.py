@@ -52,7 +52,12 @@ def tweedie(n, p, phi, mu):
         print('1 < p < 2')
         pass
     rt = np.full(n, np.nan)
-    lambdaa = mu ** (2-p)
+    labmdaa = mu ** (2-p)/(phi*(2-p))
+    alpha = (2-p)/(1-p)
+    gam = phi * (p-1) * (mu ** (p-1))
+    N = np.random.poisson(labmdaa, n)
+    for i in range():
+        pass
 
 
 
