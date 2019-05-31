@@ -11,11 +11,14 @@ def factorial(n):
         return 1
     return n * factorial(n-1)
 
-# def probability_of_success(failures, mean_value):
-#     '''
-#     Using the probability of success for a Poisson distribution.
-#     ''' 
-#     return mean_value / (failures + mean_value)
+class NegativeBinomial(Poisson, Gamma):
+    '''
+    The negative binomial family can be thought of as having
+    a mean distributed according to a Gamma distribution.
+
+    '''
+    pass
+
 
 def negative_binomial(successes, failures, mu):
     '''
@@ -24,4 +27,7 @@ def negative_binomial(successes, failures, mu):
     The mean of the distribution, mu.
     '''
 
-    return (gamma(successes + failures) / (factorial(successes)*gamma(failures))) * ((failures / (mu + failures)) ** failures) * ((mu / (mu + failures)) ** successes)
+    p = (failures / (mu + failures)
+    q = (mu / (mu + failures)
+
+    return (gamma(successes + failures) / (factorial(successes)*gamma(failures)) * (p) ** failures * (q) ** successes)
