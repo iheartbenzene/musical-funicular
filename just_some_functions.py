@@ -4,7 +4,7 @@ import statsmodels.api as sm
 import pandas as pd
 import seaborn as sns
 
-from math import gamma, lgamma
+from math import gamma, lgamma, log
 from scipy.stats import beta
 from numba import jit
 
@@ -41,8 +41,9 @@ class NegativeBinomial(Poisson, Gamma):
 
         p = k / (k + mu)
 
-        return (gamma(k+y)/(factorial(k)*gamma(y))) * p * (q ** y)
+        can_link = log(mu / (k + mu))
 
+        return (gamma(k+y)/(factorial(k)*gamma(y))) * p * (q ** y)
 
 def tweedie(n, p, phi, mu):
     '''
