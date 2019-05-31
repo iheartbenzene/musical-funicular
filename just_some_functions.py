@@ -22,7 +22,7 @@ def factorial(n):
 
 class NegativeBinomial(Poisson, Gamma):
     '''
-    A negative binomial family when the Poisson distribution 
+    A negative binomial family for when the Poisson distribution 
     has a Gamma distributed mean.
 
     '''
@@ -65,6 +65,8 @@ def tweedie(n, p, phi, mu):
     for i in range(n):
         rt[i] = np.random.gamma(N[i] * np.abs(alpha), gam, 1)
     return rt
+
+
 
 
 
