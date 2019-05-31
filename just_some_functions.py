@@ -27,7 +27,7 @@ def negative_binomial(successes, failures, mu):
     The mean of the distribution, mu.
     '''
 
-    p = (failures / (mu + failures)
-    q = (mu / (mu + failures)
+    p = failures / (mu + failures)
+    q = mu / (mu + failures)
 
     return (gamma(successes + failures) / (factorial(successes)*gamma(failures)) * (p) ** failures * (q) ** successes)
