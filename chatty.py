@@ -22,21 +22,23 @@ except:
 
     words = []
     classes = []
-    docs_x = []
-    docs_y = []
+    # docs_x = []
+    # docs_y = []
+    docs = []
     ignore = ['?']
 
     for intent in data['intents']:
-        for pattern in intent['pattern']:
+        for pattern in intent['patterns']:
             word = nltk.word_tokenize(pattern)
             words.extend(word)
-            docs_x.append(word)
-            docs_y.append(intent['tag'])
+            # docs_x.append(word)
+            # docs_y.append(intent['tag'])
+            docs.append((word, intent['tag']))
 
             if intent['tag'] not in classes:
                 classes.append(intent['tag'])
 
-    words = [LancasterStemmer.stem(w.lower()) for w in words if w != '?']
+    words = [LancasterStemmer().stem(w.lower()) for w in words if w not in ignore]
     words = sorted(list(set(words)))
 
     classes = sorted(classes)
