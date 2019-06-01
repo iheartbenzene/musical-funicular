@@ -12,69 +12,64 @@ from tensorflow.python.keras.models import Sequential
 from tensorflow.python.keras.layers import Dense, Activation, Dropout
 from tensorflow.python.keras.optimizers import SGD
 
-try:
-    with open('data.pkl', 'rb') as f:
-        words, classes, training, output = load(f)
+with open('intents1.json') as first_intent:
+    data = json.load(first_intent)
 
-except:
-    with open('intents1.json') as first_intent:
-        data = json.load(first_intent)
+words = []
+classes = []
+# docs_x = []
+# docs_y = []
+docs = []
+ignore = ['?']
 
-    words = []
-    classes = []
-    # docs_x = []
-    # docs_y = []
-    docs = []
-    ignore = ['?']
+for intent in data['intents']:
+    for pattern in intent['patterns']:
+        w = nltk.word_tokenize(pattern)
+        words.extend(w)
+        # docs_x.append(word)
+        # docs_y.append(intent['tag'])
+        docs.append((w, intent['tag']))
 
-    for intent in data['intents']:
-        for pattern in intent['patterns']:
-            word = nltk.word_tokenize(pattern)
-            words.extend(word)
-            # docs_x.append(word)
-            # docs_y.append(intent['tag'])
-            docs.append((word, intent['tag']))
+        if intent['tag'] not in classes:
+            classes.append(intent['tag'])
 
-            if intent['tag'] not in classes:
-                classes.append(intent['tag'])
+words = [LancasterStemmer().stem(w.lower()) for w in words if w not in ignore]
+words = sorted(list(set(words)))
 
-    words = [LancasterStemmer().stem(w.lower()) for w in words if w not in ignore]
-    words = sorted(list(set(words)))
+classes = sorted(list(set(classes)))
 
-    classes = sorted(classes)
+print(len(docs), "documents")
+print(len(classes), "classes")
+print(len(words), "stemmed words")
 
-    training = []
-    output = []
+# training = []
+# output = []
 
-    output_null = [0 for _ in range(len(classes))]
+# output_null = [0 for _ in range(len(classes))]
 
-    for s, doc in enumerate(docs_x):
-        bag = []
-        word = [LancasterStemmer.stem(w.lower()) for w in doc]
-        for w in words:
-            if w in words:
-                bag.append(1)
-            bag.append(0)
+# for s, doc in enumerate(docs):
+#     bag = []
+#     word = [LancasterStemmer.stem(w.lower()) for w in doc]
+#     for w in words:
+#         if w in words:
+#             bag.append(1)
+#         bag.append(0)
 
-        output_row = output_null[:]
-        output_row[classes.index(docs_y[x])] = 1
+#     output_row = output_null[:]
+#     output_row[classes.index(docs_y[x])] = 1
 
-        training.append([bag, output_row])
+#     training.append([bag, output_row])
 
-        # training.append(bag)
-        # output.append(output_row)
-
-    training, output = np.array(training), np.array(output)
+#     training, output = np.array(training), np.array(output)
 
 
 
-    with open('data.pkl', 'wb') as f:
-        dump((words, classes, training, output), f)
+# with open('data.pkl', 'wb') as f:
+#     dump((words, classes, training, output), f)
 
-tf.reset_default_graph()
 
-model = Sequential()
-model.add(Dense(128, input_shape=(len(train_x[0]),), activation='relu'))
+# model = Sequential()
+# model.add(Dense(128, input_shape=(len(train_x[0]),), activation='relu'))
 
 # try:
 #     model.load('model.tflearn')
