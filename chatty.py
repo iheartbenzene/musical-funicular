@@ -62,7 +62,7 @@ except:
     random.shuffle(training)
     training = np.array(training)
 
-    train_x, train_y = list(training[:,0]), list(training[:,1])
+    train_x, train_y = list(set(training[:,0])), list(training[:,1])
 
     print("\n Saving key variables... \n")
     with open('pickle/data.pkl', 'wb') as f:
@@ -83,15 +83,11 @@ try:
     with open(f'chatty.pkl', 'rb') as file:
         model = load(file)
 except:
-
-    print(len(train_x[0]))
-    print(np.array(train_x).shape)
-    print(np.array(train_y).shape)
-
     print("\n Fitting Model... \n")
-    model.fit(np.array(train_x), np.array(train_y), epochs=200, batch_size=5, verbose=1)
-    with open(f'chatty.pkl', 'wb') as file:
-        dump(file)
+    for i in range(len(np.array(train_x))+1):
+        model.fit(np.array(train_x)[i], np.array(train_y)[i], epochs=200, batch_size=5, verbose=1)
+        with open(f'chatty.pkl', 'wb') as file:
+            dump(file)
 
 
 def bag_of_words(query, words):
