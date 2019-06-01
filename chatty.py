@@ -3,6 +3,7 @@ import tensorflow as tf
 import tflearn as tfl
 import nltk
 import json
+import random
 
 '''
 Known error:
@@ -84,3 +85,24 @@ except:
     model.fit(training, output, n_epoch=1e3, batch_size=8, show_metric=True)
     model.save('model/model.tflearn')
 
+def bag_of_words(query, words):
+    pass
+
+def chat():
+    print('Hello! What would you like to talk about?')
+    while True:
+        query = input(">>> ")
+        if query.lower() == 'exit':
+            break
+        
+        results = model.predict([bag_of_words(query, words)])
+        results_index = np.argmax(results)
+        tag = labels[results_index]
+
+        for tags in data['intents']:
+            if tags['tag'] == tag:
+                responses = tags['responses']
+
+        print(random.choice(responses))
+
+chat()
