@@ -86,7 +86,17 @@ except:
     model.save('model/model.tflearn')
 
 def bag_of_words(query, words):
-    pass
+    bag = [0 for _ in range(len(words))]
+
+    query_words = nltk.word_tokenize(query)
+    query_words = [LancasterStemmer.stem(word.lower()) for word in query_words]
+
+    for r in query_words:
+        for i, j in enumerate(words):
+            if j == r:
+                bag[i] = 1
+
+    return np.array(bag)
 
 def chat():
     print('Hello! What would you like to talk about?')
