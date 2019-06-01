@@ -45,6 +45,8 @@ class NegativeBinomial(Poisson, Gamma):
 
         return (gamma(k+y)/(factorial(k)*gamma(y))) * p * (q ** y)
 
+
+
 def tweedie(n, p, phi, mu):
     '''
     n is the number of points to be generated
