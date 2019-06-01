@@ -17,8 +17,6 @@ with open('intents1.json') as first_intent:
 
 words = []
 classes = []
-# docs_x = []
-# docs_y = []
 docs = []
 ignore = ['?']
 
@@ -26,8 +24,6 @@ for intent in data['intents']:
     for pattern in intent['patterns']:
         w = nltk.word_tokenize(pattern)
         words.extend(w)
-        # docs_x.append(word)
-        # docs_y.append(intent['tag'])
         docs.append((w, intent['tag']))
 
         if intent['tag'] not in classes:
@@ -42,25 +38,27 @@ print(len(docs), "documents")
 print(len(classes), "classes")
 print(len(words), "stemmed words")
 
-# training = []
-# output = []
+training = []
+output_null = [0] * len(classes)
 
-# output_null = [0 for _ in range(len(classes))]
+for doc in docs:
+    bag = []
+    word_pattern = doc[0]
+    word_pattern = [LancasterStemmer.stem(w.lower()) for w in doc]
+    for w in words:
+        if w in word_pattern:
+            bag.append(1)
+        bag.append(0)
 
-# for s, doc in enumerate(docs):
-#     bag = []
-#     word = [LancasterStemmer.stem(w.lower()) for w in doc]
-#     for w in words:
-#         if w in words:
-#             bag.append(1)
-#         bag.append(0)
+    output_row = list(output_null)
+    output_row[classes.index(docs[1])] = 1
 
-#     output_row = output_null[:]
-#     output_row[classes.index(docs_y[x])] = 1
+    training.append([bag, output_row])
 
-#     training.append([bag, output_row])
+random.shuffle(training)
+training = np.array(training)
 
-#     training, output = np.array(training), np.array(output)
+train_x, train_y = list(training[:,0]), list(training[:,1])
 
 
 
