@@ -67,9 +67,23 @@ except:
     with open('data.pkl', 'wb') as f:
         dump((words, classes, train_x, train_y), f)
 
+model = Sequential()
+model.add(Dense(128, input_shape=(len(train_x[0]),), activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(64, activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(len(train_y[0]), activation='softmax'))
 
-# model = Sequential()
-# model.add(Dense(128, input_shape=(len(train_x[0]),), activation='relu'))
+sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
+model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
+
+try:
+    model.load('model/chatty.hdf5')
+except:
+    model.fit(np.array(train_x), np.array(train_y), epochs=200, batch_size=5, verbose=1)
+    model.save('model/chatty.hdf5')
+
+
 
 # try:
 #     model.load('model.tflearn')
