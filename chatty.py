@@ -84,10 +84,9 @@ try:
         model = load(file)
 except:
     print("\n Fitting Model... \n")
-    for i in range(len(np.array(train_x))+1):
-        model.fit(np.array(train_x)[i], np.array(train_y)[i], epochs=200, batch_size=5, verbose=1)
-        with open(f'chatty.pkl', 'wb') as file:
-            dump(file)
+    model.fit(np.array(train_x), np.array(train_y), epochs=200, batch_size=5, verbose=1)
+    with open(f'chatty.pkl', 'wb') as file:
+        dump(file)
 
 
 def bag_of_words(query, words):
