@@ -1,6 +1,7 @@
 import numpy as np
 import tensorflow as tf
-import tflearn as tfl
+import tensorflow.python.estimator as tfe
+# import tflearn as tfl
 import nltk
 import json
 import random
@@ -73,18 +74,18 @@ except:
 
 tf.reset_default_graph()
 
-net = tfl.input_data(shape=[None, len(training(0))])
-net = tfl.fully_connected(net, 8)
-net = tfl.fully_connected(net, 8)
-net = tfl.fully_connected(net, len(output[0]), activation='softmax')
-net = tfl.regression(net)
+net = tfe.input_data(shape=[None, len(training(0))])
+net = tfe.fully_connected(net, 8)
+net = tfe.fully_connected(net, 8)
+net = tfe.fully_connected(net, len(output[0]), activation='softmax')
+net = tfe.regression(net)
 
-model = tfl.DNN(net)
+model = tfe.DNNClassifier(net)
 
 try:
     model.load('model.tflearn')
 except:
-    model.fit(training, output, n_epoch=1e3, batch_size=8, show_metric=True)
+    model.train(training, output, n_epoch=1e3, batch_size=8, show_metric=True)
     model.save('model/model.tflearn')
 
 def bag_of_words(query, words):
