@@ -1,37 +1,30 @@
 import numpy as np
 import tensorflow as tf
-import tensorflow.python.estimator as tfe
-# import tflearn as tfl
 import nltk
 import json
 import random
-
-'''
-Known error:
-
-<module>
-    from tensorflow.contrib.framework.python.ops import add_arg_scope as contrib_add_arg_scope
-ModuleNotFoundError: No module named 'tensorflow.contrib'
-
-'''
-
-# from tensorflow import tflearn
+import pandas as pd
+import pickle
 
 from pickle import dump, load
 from nltk.stem.lancaster import LancasterStemmer
+from tensorflow.python.keras.models import Sequential
+from tensorflow.python.keras.layers import Dense, Activation, Dropout
+from tensorflow.python.keras.optimizers import SGD
 
 try:
     with open('data.pkl', 'rb') as f:
-        words, labels, training, output = load(f)
+        words, classes, training, output = load(f)
 
 except:
     with open('intents1.json') as first_intent:
         data = json.load(first_intent)
 
     words = []
-    labels = []
+    classes = []
     docs_x = []
     docs_y = []
+    ignore = ['?']
 
     for intent in data['intents']:
         for pattern in intent['pattern']:
@@ -40,18 +33,18 @@ except:
             docs_x.append(word)
             docs_y.append(intent['tag'])
 
-            if intent['tag'] not in labels:
-                labels.append(intent['tag'])
+            if intent['tag'] not in classes:
+                classes.append(intent['tag'])
 
     words = [LancasterStemmer.stem(w.lower()) for w in words if w != '?']
     words = sorted(list(set(words)))
 
-    labels = sorted(labels)
+    classes = sorted(classes)
 
     training = []
     output = []
 
-    output_null = [0 for _ in range(len(labels))]
+    output_null = [0 for _ in range(len(classes))]
 
     for s, doc in enumerate(docs_x):
         bag = []
@@ -62,31 +55,29 @@ except:
             bag.append(0)
 
         output_row = output_null[:]
-        output_row[labels.index(docs_y[x])] = 1
+        output_row[classes.index(docs_y[x])] = 1
 
-        training.append(bag)
-        output.append(output_row)
+        training.append([bag, output_row])
+
+        # training.append(bag)
+        # output.append(output_row)
 
     training, output = np.array(training), np.array(output)
 
+
+
     with open('data.pkl', 'wb') as f:
-        dump((words, labels, training, output), f)
+        dump((words, classes, training, output), f)
 
 tf.reset_default_graph()
 
-net = tfe.input_data(shape=[None, len(training(0))])
-net = tfe.fully_connected(net, 8)
-net = tfe.fully_connected(net, 8)
-net = tfe.fully_connected(net, len(output[0]), activation='softmax')
-net = tfe.regression(net)
 
-model = tfe.DNNClassifier(net)
 
-try:
-    model.load('model.tflearn')
-except:
-    model.train(training, output, n_epoch=1e3, batch_size=8, show_metric=True)
-    model.save('model/model.tflearn')
+# try:
+#     model.load('model.tflearn')
+# except:
+#     model.train(training, output, n_epoch=1e3, batch_size=8, show_metric=True)
+#     model.save('model/model.tflearn')
 
 def bag_of_words(query, words):
     bag = [0 for _ in range(len(words))]
@@ -101,21 +92,21 @@ def bag_of_words(query, words):
 
     return np.array(bag)
 
-def chat():
-    print('Hello! What would you like to talk about?')
-    while True:
-        query = input(">>> ")
-        if query.lower() == 'exit':
-            break
+# def chat():
+#     print('Hello! What would you like to talk about?')
+#     while True:
+#         query = input(">>> ")
+#         if query.lower() == 'exit':
+#             break
         
-        results = model.predict([bag_of_words(query, words)])
-        results_index = np.argmax(results)
-        tag = labels[results_index]
+#         results = model.predict([bag_of_words(query, words)])
+#         results_index = np.argmax(results)
+#         tag = classes[results_index]
 
-        for tags in data['intents']:
-            if tags['tag'] == tag:
-                responses = tags['responses']
+#         for tags in data['intents']:
+#             if tags['tag'] == tag:
+#                 responses = tags['responses']
 
-        print(random.choice(responses))
+#         print(random.choice(responses))
 
-chat()
+# chat()
