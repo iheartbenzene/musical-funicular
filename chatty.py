@@ -12,11 +12,11 @@ from tensorflow.python.keras.models import Sequential
 from tensorflow.python.keras.layers import Dense, Activation, Dropout
 from tensorflow.python.keras.optimizers import SGD
 
-with open('intents1.json') as first_intent:
+with open('json/intents1.json') as first_intent:
     data = json.load(first_intent)
 
 try:
-    with open('data.pkl', 'rb') as f:
+    with open('pickle/data.pkl', 'rb') as f:
         words, classes, train_x, train_y = load(f)
 except:
     words = []
@@ -64,7 +64,7 @@ except:
 
     train_x, train_y = list(training[:,0]), list(training[:,1])
 
-    with open('data.pkl', 'wb') as f:
+    with open('pickle/data.pkl', 'wb') as f:
         dump((words, classes, train_x, train_y), f)
 
 model = Sequential()

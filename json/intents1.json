@@ -1,0 +1,38 @@
+{"intents": [
+        {"tag": "greeting",
+         "patterns": ["Hi", "How are you", "Is anyone there?", "Hello", "Good day"],
+         "responses": ["Hello, thanks for visiting", "Good to see you again", "Hi there, how can I help?"],
+         "context_set": ""
+        },
+        {"tag": "goodbye",
+         "patterns": ["Bye", "See you later", "Goodbye", "Talk later then", "Bye bye"],
+         "responses": ["See you later, thanks for visiting", "Have a good day", "Bye! Come back again soon."],
+         "context_set": ""
+        },
+        {"tag": "thanks",
+         "patterns": ["Thanks", "Thank you", "That's helpful", "You're so helpful", "Thx"],
+         "responses": ["No problem", "Indeed", "You're welcome"],
+         "context_set": ""
+        },
+        {"tag": "hours",
+         "patterns": ["What hours are you available?", "What are your hours?", "When are you open?", "How long will you be around?", "How late are you here?"],
+         "responses": ["Every day 9am-9pm...assuming I'm logged in", "From dawn til dusk...not really.", "While I'm logged in; no set time though since I'm not paid for this."],
+         "context_set": ""
+        },
+        {"tag": "payments",
+         "patterns": ["Do you take credit cards?", "Do you accept Mastercard?", "Are you cash only?", "What payment do you accept?", "How can I pay you?"],
+         "responses": ["I accept VISA, Mastercard, and AMEX", "Send a wire to XXXX-XXXXX", "I like cash but a wire will do."],
+         "context_set": ""
+        },
+        {"tag": "opentoday",
+         "patterns": ["Are you open today?", "When do you open today?", "What are your hours today?", "Are you going to be here long?", "You're here today?"],
+         "responses": ["Every day 9am-9pm...assuming I'm logged in", "From dawn til dusk...not really.", "While I'm logged in; no set time though since I'm not paid for this."],
+         "context_set": ""
+        },
+        {"tag": "interests",
+         "patterns": ["What do you like?", "What are you into?", "What interests you?", "Tell me about yourself?", "What entertains you?"],
+         "responses": ["I can talk about math, Python, and anime stuff. What do you want to know?", "Esoteric math stuff mostly...but, you do realize I'm not human, right?", "Anime and manga!!...don't do this...ask something else. "],
+         "context_set": ""
+        }
+   ]
+}
