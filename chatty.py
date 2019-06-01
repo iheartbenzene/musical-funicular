@@ -60,3 +60,6 @@ net = tfl.fully_connected(net, len(output[0]), activation='softmax')
 net = tfl.regression(net)
 
 model = tfl.DNN(net)
+
+model.fit(training, output, n_epoch=1e3, batch_size=8, show_metric=True)
+model.save('model/model.tflearn')
