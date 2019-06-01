@@ -64,8 +64,10 @@ except:
 
     train_x, train_y = list(training[:,0]), list(training[:,1])
 
+    print("\n Saving key variables... \n")
     with open('pickle/data.pkl', 'wb') as f:
         dump((words, classes, train_x, train_y), f)
+
 
 model = Sequential()
 model.add(Dense(128, input_shape=(len(train_x[0]),), activation='relu'))
@@ -81,16 +83,16 @@ try:
     with open(f'chatty.pkl', 'rb') as file:
         model = load(file)
 except:
+
+    print(len(train_x[0]))
+    print(np.array(train_x).shape)
+    print(np.array(train_y).shape)
+
+    print("\n Fitting Model... \n")
     model.fit(np.array(train_x), np.array(train_y), epochs=200, batch_size=5, verbose=1)
     with open(f'chatty.pkl', 'wb') as file:
         dump(file)
 
-
-# try:
-#     model.load('model.tflearn')
-# except:
-#     model.train(training, output, n_epoch=1e3, batch_size=8, show_metric=True)
-#     model.save('model/model.tflearn')
 
 def bag_of_words(query, words):
     bag = [0 for _ in range(len(words))]
