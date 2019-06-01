@@ -29,3 +29,25 @@ words = [LancasterStemmer.stem(w.lower()) for w in words if w != '?']
 words = sorted(list(set(words)))
 
 labels = sorted(labels)
+
+training = []
+output = []
+
+output_null = [0 for _ in range(len(labels))]
+
+for s, doc in enumerate(docs_x):
+    bag = []
+    word = [LancasterStemmer.stem(w.lower()) for w in doc]
+    for w in words:
+        if w in words:
+            bag.append(1)
+        bag.append(0)
+
+    output_row = output_null[:]
+    output_row[labels.index(docs_y[x])] = 1
+
+    training.append(bag)
+    output.append(output_row)
+
+training, output = np.array(training), np.array(output)
+
