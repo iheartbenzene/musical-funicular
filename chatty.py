@@ -3,11 +3,9 @@ import tensorflow as tf
 import tflearn as tfl
 import nltk
 import json
+
 from pickle import dump, load
-
 from nltk.stem.lancaster import LancasterStemmer
-from smart_open import open
-
 
 with open('intents1.json') as first_intent:
     data = json.load(first_intent)
@@ -27,3 +25,7 @@ for intent in data['intents']:
         if intent['tag'] not in labels:
             labels.append(intent['tag'])
 
+words = [LancasterStemmer.stem(w.lower()) for w in words if w != '?']
+words = sorted(list(set(words)))
+
+labels = sorted(labels)
