@@ -78,11 +78,12 @@ sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
 model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
 
 try:
-    model.load('model/chatty.hdf5')
+    with open(f'chatty.pkl', 'rb') as file:
+        model = load(file)
 except:
     model.fit(np.array(train_x), np.array(train_y), epochs=200, batch_size=5, verbose=1)
-    model.save('model/chatty.hdf5')
-
+    with open(f'chatty.pkl', 'wb') as file:
+        dump(file)
 
 
 # try:
