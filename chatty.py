@@ -62,7 +62,7 @@ except:
     random.shuffle(training)
     training = np.array(training)
 
-    train_x, train_y = list(set(training[:,0])), list(training[:,1])
+    train_x, train_y = list(training[:,0]), list(training[:,1])
 
     print("\n Saving key variables... \n")
     with open('pickle/data.pkl', 'wb') as f:
@@ -79,14 +79,16 @@ model.add(Dense(len(train_y[0]), activation='softmax'))
 sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
 model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
 
-try:
-    with open(f'chatty.pkl', 'rb') as file:
-        model = load(file)
-except:
-    print("\n Fitting Model... \n")
-    model.fit(np.array(train_x), np.array(train_y), epochs=200, batch_size=5, verbose=1)
-    with open(f'chatty.pkl', 'wb') as file:
-        dump(file)
+print(np.array(train_x[0]))
+
+# try:
+#     with open(f'chatty.pkl', 'rb') as file:
+#         model = load(file)
+# except:
+#     print("\n Fitting Model... \n")
+#     model.fit(np.array(train_x), np.array(train_y), epochs=200, batch_size=5, verbose=1)
+#     with open(f'chatty.pkl', 'wb') as file:
+#         dump(file)
 
 
 def bag_of_words(query, words):
