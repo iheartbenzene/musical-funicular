@@ -7,6 +7,8 @@ import json
 from pickle import dump, load
 from nltk.stem.lancaster import LancasterStemmer
 
+import tensorflow.contrib 
+
 with open('intents1.json') as first_intent:
     data = json.load(first_intent)
 
