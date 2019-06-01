@@ -71,7 +71,8 @@ except:
 
 tf.reset_default_graph()
 
-
+model = Sequential()
+model.add(Dense(128, input_shape=(len(train_x[0]),), activation='relu'))
 
 # try:
 #     model.load('model.tflearn')
