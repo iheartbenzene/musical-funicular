@@ -23,7 +23,7 @@
         {"tag": "opentoday",
          "patterns": ["Are you open today?", "When do you open today?", "What are your hours today?"],
          "responses": ["We're open every day from 9am-9pm", "Our hours are 9am-9pm every day"]
-        }
+        },
         {"tag": "interests",
          "patterns": ["What do you like?", "What are you into?", "What interests you?", "Tell me about yourself.", "Tell me about yourself?"],
          "responses": ["I can talk about math, Python, and anime stuff. What do you want to know?", "Esoteric math stuff mostly...", "...you do realize I'm not human, right?", "Anime and manga!!!", "...don't do this.", "...ask something else."]
