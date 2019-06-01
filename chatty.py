@@ -51,3 +51,12 @@ for s, doc in enumerate(docs_x):
 
 training, output = np.array(training), np.array(output)
 
+tf.reset_default_graph()
+
+net = tfl.input_data(shape=[None, len(training(0))])
+net = tfl.fully_connected(net, 8)
+net = tfl.fully_connected(net, 8)
+net = tfl.fully_connected(net, len(output[0]), activation='softmax')
+net = tfl.regression(net)
+
+model = tfl.DNN(net)
