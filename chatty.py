@@ -6,6 +6,7 @@ import random
 import pandas as pd
 import pickle
 import h5py
+import flask
 
 from pickle import dump, load
 from nltk.stem.lancaster import LancasterStemmer
@@ -126,23 +127,21 @@ def sentence_classification(sentence):
     return result_list
 
 
-
-
-# def chat():
-#     print('Hello! What would you like to talk about?')
-#     while True:
-#         query = input(">>> ")
-#         if query.lower() == 'exit':
-#             break
+def chat():
+    print('Hello! What would you like to talk about?')
+    while True:
+        query = input(">>> ")
+        if query.lower() == 'exit':
+            break
         
-#         results = model.predict([bag_of_words(query, words)])
-#         results_index = np.argmax(results)
-#         tag = classes[results_index]
+        results = model.predict([bag_of_words(query, words)])
+        results_index = np.argmax(results)
+        tag = classes[results_index]
 
-#         for tags in data['intents']:
-#             if tags['tag'] == tag:
-#                 responses = tags['responses']
+        for tags in data['intents']:
+            if tags['tag'] == tag:
+                responses = tags['responses']
 
-#         print(random.choice(responses))
+        print(random.choice(responses))
 
-# chat()
+chat()
