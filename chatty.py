@@ -64,7 +64,8 @@ except:
 
     train_x, train_y = list(training[:,0]), list(training[:,1])
 
-    print("\n Saving key variables... \n")
+    print("\n Saving data... \n")
+
     with open('pickle/data.pkl', 'wb') as f:
         dump((words, classes, train_x, train_y), f)
 
@@ -79,7 +80,7 @@ model.add(Dense(len(train_y[0]), activation='softmax'))
 sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
 model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
 
-print(np.array(train_x[0]))
+print(np.array(train_x)[:1])
 
 # try:
 #     with open(f'chatty.pkl', 'rb') as file:
