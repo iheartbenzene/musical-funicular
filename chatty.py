@@ -80,16 +80,16 @@ model.add(Dense(len(train_y[0]), activation='softmax'))
 sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
 model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
 
-print(np.array(train_x)[:1])
+# print(*np.array(train_x)[:1])
 
-# try:
-#     with open(f'chatty.pkl', 'rb') as file:
-#         model = load(file)
-# except:
-#     print("\n Fitting Model... \n")
-#     model.fit(np.array(train_x), np.array(train_y), epochs=200, batch_size=5, verbose=1)
-#     with open(f'chatty.pkl', 'wb') as file:
-#         dump(file)
+try:
+    with open(f'chatty.pkl', 'rb') as file:
+        model = load(file)
+except:
+    print("\n Fitting Model... \n")
+    model.fit(*np.array(train_x), *np.array(train_y), epochs=200, batch_size=5, verbose=1)
+    with open(f'chatty.pkl', 'wb') as file:
+        dump(file)
 
 
 def bag_of_words(query, words):
