@@ -26,3 +26,10 @@ for (i, image_path) in enumerate(image_paths):
 
     image = cv2.imread(image_path)
     rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+binding_box = face_recognition.face_locations(rgb, model=args['detection_method'])
+encodings = face_recognition.face_encodings(rgb, binding_box)
+
+for encoding in encodings:
+    encodings_accounted.append(encoding)
+    names_accounted.append(name)
