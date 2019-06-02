@@ -142,5 +142,3 @@ def chat():
                 responses = tags['responses']
 
         print(random.choice(responses))
-
-chat()
