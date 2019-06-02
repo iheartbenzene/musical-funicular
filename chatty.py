@@ -129,7 +129,7 @@ def local_classification(sentence):
 app = Flask(__name__)
 CORS=app
 
-@app.route('~/chatty', methods=['POST'])
+@app.route('/musical-funicular', methods=['POST'])
 
 def classify():
     THRESHOLD = 0.25
