@@ -5,10 +5,11 @@ import json
 import random
 import pandas as pd
 import pickle
+import h5py
 
 from pickle import dump, load
 from nltk.stem.lancaster import LancasterStemmer
-from tensorflow.python.keras.models import Sequential
+from tensorflow.python.keras.models import Sequential, load_model
 from tensorflow.python.keras.layers import Dense, Activation, Dropout
 from tensorflow.python.keras.optimizers import SGD
 
@@ -90,16 +91,13 @@ model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy
 # print("np.array(train_x).shape", np.array(train_x).shape)
 
 try:
-    with open(f'pickle/chatty.sav', 'rb') as chatty_model_file:
-        model = load(chatty_model_file)
+    model = load_model('model/chatty.h5')
     print("\n Loaded Chatty... \n")
 except:
     print("\n Fitting Model... \n")
     model.fit(np.array(train_x), np.array(train_y), epochs=200, batch_size=5, verbose=1)
-    print("\n Pickling model... \n")
-    chatty_model_file = 'pickle/chatty.sav'
-    dump(model, open(chatty_model_file, 'wb'))
-
+    print("\n Saving model to disk... \n")
+    model.save('model/chatty.h5')
 
 def bag_of_words(query, words):
     bag = [0 for _ in range(len(words))]
