@@ -93,13 +93,24 @@ except:
     model.save('model/chatty.h5')
 
 
-def bag_of_words(query, words):
-    pass
-
 def clean_sentences(sentence):
-    pass
+    words_in_sentence = nltk.word_tokenize(sentence)
+    words_in_sentence = [LancasterStemmer().stem(word.lower()) for word in words_in_sentence]
+    return words_in_sentence
 
-def sentence_classification(sentence):
+def bag_of_words(sentence, words, show_details=True):
+    well_worded = clean_sentences(sentence)
+    bag = [0] * len(words)
+    for s in well_worded:
+        for i, w in enumerate(words):
+            if w == s:
+                bag[i] = 1
+                if show_details:
+                    print("Look what I found! %s" % w)
+    
+    return np.array(bag)
+
+def local_classification(sentence):
     THRESHOLD = 0.25
 
     input_data = pd.DataFrame([bag_of_words(sentence, words)], dtype=float, index=['input'])
