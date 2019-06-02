@@ -6,7 +6,6 @@ import random
 import pandas as pd
 import pickle
 import h5py
-import flask
 
 from pickle import dump, load
 from nltk.stem.lancaster import LancasterStemmer
