@@ -1,5 +1,6 @@
 from httplib2 import Http
 from json import dumps
+from chatty import chat
 
 def main():
     url = ""
