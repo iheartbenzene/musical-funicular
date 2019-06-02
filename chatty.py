@@ -90,13 +90,15 @@ model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy
 # print("np.array(train_x).shape", np.array(train_x).shape)
 
 try:
-    with open(f'chatty.pkl', 'rb') as file:
-        model = load(file)
+    with open(f'pickle/chatty.sav', 'rb') as chatty_model_file:
+        model = load(chatty_model_file)
+    print("\n Loaded Chatty... \n")
 except:
     print("\n Fitting Model... \n")
     model.fit(np.array(train_x), np.array(train_y), epochs=200, batch_size=5, verbose=1)
-    with open(f'chatty.pkl', 'wb') as file:
-        dump(file)
+    print("\n Pickling model... \n")
+    chatty_model_file = 'pickle/chatty.sav'
+    dump(model, open(chatty_model_file, 'wb'))
 
 
 def bag_of_words(query, words):
