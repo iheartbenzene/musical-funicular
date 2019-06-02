@@ -45,3 +45,5 @@ except:
         f.write(pickle.dump(data))
     f.close()
 
+image = cv2.imread(args['image'])
+rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
