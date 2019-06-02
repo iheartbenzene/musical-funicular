@@ -125,28 +125,11 @@ def local_classification(sentence):
     return result_list
 
 
-# def chat():
-#     print('Hello! What would you like to talk about?')
-#     while True:
-#         query = input(">>> ")
-#         if query.lower() == 'exit':
-#             break
-        
-#         results = model.predict([bag_of_words(query, words)])
-#         results_index = np.argmax(results)
-#         tag = classes[results_index]
-
-#         for tags in data['intents']:
-#             if tags['tag'] == tag:
-#                 responses = tags['responses']
-
-#         print(random.choice(responses))
-
 
 app = Flask(__name__)
 CORS=app
 
-@app.route('', methods=['POST'])
+@app.route('~/chatty', methods=['POST'])
 
 def classify():
     THRESHOLD = 0.25
