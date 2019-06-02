@@ -6,4 +6,7 @@ def main():
     bot_message = {
         'text': 'Hello! I\'m Chatty, nice to meet you! '
     }
-    
+
+    message_headers = { 'Content-Type': 'application/json; charset = UTF-8'}
+
+    http_obj = Http()
