@@ -125,22 +125,22 @@ def local_classification(sentence):
     return result_list
 
 
-def chat():
-    print('Hello! What would you like to talk about?')
-    while True:
-        query = input(">>> ")
-        if query.lower() == 'exit':
-            break
+# def chat():
+#     print('Hello! What would you like to talk about?')
+#     while True:
+#         query = input(">>> ")
+#         if query.lower() == 'exit':
+#             break
         
-        results = model.predict([bag_of_words(query, words)])
-        results_index = np.argmax(results)
-        tag = classes[results_index]
+#         results = model.predict([bag_of_words(query, words)])
+#         results_index = np.argmax(results)
+#         tag = classes[results_index]
 
-        for tags in data['intents']:
-            if tags['tag'] == tag:
-                responses = tags['responses']
+#         for tags in data['intents']:
+#             if tags['tag'] == tag:
+#                 responses = tags['responses']
 
-        print(random.choice(responses))
+#         print(random.choice(responses))
 
 
 app = Flask(__name__)
@@ -151,15 +151,15 @@ CORS=app
 def classify():
     THRESHOLD = 0.25
 
-    sentence = request.json
+    sentence = request.json(['sentence'])
 
-    input_data = pd.DataFrame([bag_of_words(sentence, words)], dtype=float, index=['input'])
-    results = model.predict([input_data])[0]
-    results = [[i, r] for i, r in enumerate(results) if r > THRESHOLD]
-    results.sort(key=lambda x: x[1], reverse=True)
-    result_list = []
-    for r in results:
-        result_list.append((classes[r[0]], str(r[1])))
+    input_data = pd.DataFrame([bag_of_words(sentence, words)], dtype = float, index = ['input'])
+    resultant = model.predict([input_data])[0]
+    resultant = [[p, q] for p, q in enumerate(resultant) if q > THRESHOLD]
+    resultant.sort(key=lambda x: x[1], reverse=True)
+    returned_list = []
+    for r in resultant:
+        returned_list.append({'intent': classes[r[0]]})
 
-    return result_list
+    return response
 
