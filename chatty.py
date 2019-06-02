@@ -12,7 +12,7 @@ from nltk.stem.lancaster import LancasterStemmer
 from tensorflow.python.keras.models import Sequential, load_model
 from tensorflow.python.keras.layers import Dense, Activation, Dropout
 from tensorflow.python.keras.optimizers import SGD
-from flask import Flask, request, make_response
+from flask import Flask, request, jsonify
 
 with open('json/intents1.json') as first_intent:
     data = json.load(first_intent)
@@ -159,7 +159,8 @@ def classify():
     resultant.sort(key=lambda x: x[1], reverse=True)
     returned_list = []
     for r in resultant:
-        returned_list.append({'intent': classes[r[0]]})
-
+        returned_list.append({'intent': classes[r[0]], "probability": str(r[1])})
+    
+    response = jsonify(returned_list)
     return response
 
