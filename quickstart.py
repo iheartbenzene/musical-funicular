@@ -13,7 +13,7 @@ def main():
     http_obj = Http()
 
     response = http_obj.request(
-        url = url,
+        uri = url,
         method = 'POST',
         headers = message_headers,
         body = dumps(bot_message)
