@@ -82,13 +82,6 @@ model.add(Dense(len(train_y[0]), activation='softmax'))
 sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
 model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
 
-# print("*np.array(train_x)[:1]", *np.array(train_x)[:1], "\n")
-# print("np.array(train_x[0])", np.array(train_x[0]), "\n")
-# print("np.array(train_x)[0]", np.array(train_x)[0], "\n")
-
-# print(np.array(train_x).shape)
-# print("np.array(train_x).dtype", np.array(train_x).dtype)
-# print("np.array(train_x).shape", np.array(train_x).shape)
 
 try:
     model = load_model('model/chatty.h5')
@@ -99,9 +92,10 @@ except:
     print("\n Saving model to disk... \n")
     model.save('model/chatty.h5')
 
+
 def bag_of_words(query, words):
     pass
-    
+
 def clean_sentences(sentence):
     pass
 
