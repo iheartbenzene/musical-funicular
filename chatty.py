@@ -112,6 +112,22 @@ def bag_of_words(query, words):
 
     return np.array(bag)
 
+def sentence_classification(sentence):
+    THRESHOLD = 0.25
+
+    input_data = pd.DataFrame([bag_of_words(sentence, words)], dtype=float, index=['input'])
+    results = model.predict([input_data])[0]
+    results = [[i, r] for i, r in enumerate(results) if r > THRESHOLD]
+    results.sort(key=lambda x: x[1], reverse=True)
+    result_list = []
+    for r in results:
+        result_list.append((classes[r[0]], str(r[1])))
+
+    return result_list
+
+
+
+
 # def chat():
 #     print('Hello! What would you like to talk about?')
 #     while True:
