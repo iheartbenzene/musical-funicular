@@ -15,3 +15,8 @@ ap.add_argument('-e', '--encodings', required=True, help='path to serialized dat
 ap.add_argument('-d', '--detection-method', type=str, default='cnn', help='facial detection method: hog or cnn')
 args = vars(ap.parse_args())
 
+print('analyzing faces...')
+image_paths = list(paths.list_images(args['dataset']))
+known_encodings = []
+known_names = []
+
