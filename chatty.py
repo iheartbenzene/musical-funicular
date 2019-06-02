@@ -164,3 +164,5 @@ def classify():
     response = jsonify(returned_list)
     return response
 
+if __name__ == "__main__":
+    app.run()
