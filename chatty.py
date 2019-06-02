@@ -129,7 +129,7 @@ def local_classification(sentence):
 app = Flask(__name__)
 CORS=app
 
-@app.route('/musical-funicular', methods=['POST'])
+@app.route('/', methods=['POST'])
 
 def classify():
     THRESHOLD = 0.25
@@ -149,5 +149,5 @@ def classify():
 
 if __name__ == "__main__":
     # I have no idea what I'm doing.
-    # app.run(debug=False, host='0.0.0.0', port=5001)
-    app.run()
+    app.run(debug=False, host='0.0.0.0', port=5001)
+    # app.run()
