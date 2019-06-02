@@ -148,4 +148,6 @@ def classify():
     return response
 
 if __name__ == "__main__":
-    app.run(debug=False, host='0.0.0.0', port=5001)
+    # I have no idea what I'm doing.
+    # app.run(debug=False, host='0.0.0.0', port=5001)
+    app.run()
