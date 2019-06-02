@@ -47,3 +47,25 @@ except:
 
 image = cv2.imread(args['image'])
 rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+print('loading facial analysis...')
+binding_box = face_recognition.face_locations(rgb, model=args['detection_method'])
+encodings = face_recognition.face_encodings(rgb, binding_box)
+
+names = []
+
+for encoding in encodings:
+    match_found = face_recognition.compare_faces(data['encodings'], encoding)
+    name = 'As yet unknown'
+
+    if True in match_found:
+        match_index = [i for (i, b) in enumerate(match_found) if b]
+        counts = {}
+
+        for i in match_index:
+            name = data['names'][i]
+            counts[name] = counts.get(name, 0) + 1
+
+        name = max(counts, key=counts.get)
+
+    names.append(name)
