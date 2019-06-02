@@ -12,6 +12,7 @@ from nltk.stem.lancaster import LancasterStemmer
 from tensorflow.python.keras.models import Sequential, load_model
 from tensorflow.python.keras.layers import Dense, Activation, Dropout
 from tensorflow.python.keras.optimizers import SGD
+from flask import Flask, request, make_response
 
 with open('json/intents1.json') as first_intent:
     data = json.load(first_intent)
@@ -141,4 +142,24 @@ def chat():
 
         print(random.choice(responses))
 
-chat()
+
+app = Flask(__name__)
+CORS=app
+
+@app.route('', methods=['POST'])
+
+def classify():
+    THRESHOLD = 0.25
+
+    sentence = request.json
+
+    input_data = pd.DataFrame([bag_of_words(sentence, words)], dtype=float, index=['input'])
+    results = model.predict([input_data])[0]
+    results = [[i, r] for i, r in enumerate(results) if r > THRESHOLD]
+    results.sort(key=lambda x: x[1], reverse=True)
+    result_list = []
+    for r in results:
+        result_list.append((classes[r[0]], str(r[1])))
+
+    return result_list
+
