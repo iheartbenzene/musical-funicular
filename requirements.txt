@@ -16,3 +16,4 @@ tflearn==0.3.2
 numba==0.43.1
 seaborn==0.9.0
 statsmodels==0.9.0
+imutils==0.5.2
