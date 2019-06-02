@@ -100,17 +100,10 @@ except:
     model.save('model/chatty.h5')
 
 def bag_of_words(query, words):
-    bag = [0 for _ in range(len(words))]
-
-    query_words = nltk.word_tokenize(query)
-    query_words = [LancasterStemmer.stem(word.lower()) for word in query_words]
-
-    for r in query_words:
-        for i, j in enumerate(words):
-            if j == r:
-                bag[i] = 1
-
-    return np.array(bag)
+    pass
+    
+def clean_sentences(sentence):
+    pass
 
 def sentence_classification(sentence):
     THRESHOLD = 0.25
@@ -142,3 +135,5 @@ def chat():
                 responses = tags['responses']
 
         print(random.choice(responses))
+
+chat()

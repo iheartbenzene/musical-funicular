@@ -3,7 +3,7 @@ from json import dumps
 from chatty import chat
 
 def main():
-    url = ""
+    url = "https://chat.googleapis.com/v1/spaces/AAAAhRq0VFI/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=UsVKw3RU5q8ldkI1_WYWAzrvgDexNeBEVWuQky9s5NE%3D"
     bot_message = {
         'text': 'Hello! I\'m Chatty, nice to meet you! '
     }
