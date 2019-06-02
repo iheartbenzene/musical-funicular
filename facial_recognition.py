@@ -17,6 +17,6 @@ args = vars(ap.parse_args())
 
 print('analyzing faces...')
 image_paths = list(paths.list_images(args['dataset']))
-known_encodings = []
-known_names = []
+encodings_accounted = []
+names_accounted = []
 
