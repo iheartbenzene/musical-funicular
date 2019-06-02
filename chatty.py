@@ -52,7 +52,8 @@ except:
         for w in words:
             if w in word_pattern:
                 bag.append(1)
-            bag.append(0)
+            else:    
+                bag.append(0)
 
         output_row = list(output_null)
         output_row[classes.index(doc[1])] = 1
@@ -84,6 +85,9 @@ model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy
 # print("np.array(train_x[0])", np.array(train_x[0]), "\n")
 # print("np.array(train_x)[0]", np.array(train_x)[0], "\n")
 
+# print(np.array(train_x).shape)
+# print("np.array(train_x).dtype", np.array(train_x).dtype)
+# print("np.array(train_x).shape", np.array(train_x).shape)
 
 try:
     with open(f'chatty.pkl', 'rb') as file:
@@ -91,11 +95,6 @@ try:
 except:
     print("\n Fitting Model... \n")
     model.fit(np.array(train_x), np.array(train_y), epochs=200, batch_size=5, verbose=1)
-    
-    # model.fit(*np.array(train_x), *np.array(train_y), epochs=200, batch_size=5, verbose=1)
-    # for i in range(len(np.array(train_x))+1):
-    #     model.fit(np.array(train_x[i]), np.array(train_y[i]), epochs=200, batch_size=5, verbose=1)
-    
     with open(f'chatty.pkl', 'wb') as file:
         dump(file)
 
