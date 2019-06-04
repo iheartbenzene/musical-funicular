@@ -1,5 +1,5 @@
 # musical-funicular
-Generating music with Python
+A pokedex?
 
 ### Getting Started:
 This project uses `python 3.7.x.`
