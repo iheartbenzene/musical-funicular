@@ -11,15 +11,15 @@ from PIL import Image, ImageDraw
 
 ap = argparse.ArgumentParser()
 ap.add_argument('-i', '--dataset', required=True, help='path to the input directory of faces and images')
-ap.add_argument('-e', '--encodings', required=True, help='path to serialized database of facial encodings')
-ap.add_argument('-d', '--detection-method', type=str, default='cnn', help='facial detection method: hog or cnn')
+ap.add_argument('-e', '--encodings', required=True, help='path to serialized database of object encodings')
+ap.add_argument('-d', '--detection-method', type=str, default='cnn', help='object detection method: hog or cnn')
 args = vars(ap.parse_args())
 
 try:
     data = pickle.loads(open(args['encodings'], 'rb').read())
     print('Image encodings loaded and ready to go!')
 except:
-    print('loading facial analysis...')
+    print('loading object analysis...')
     image_paths = list(paths.list_images(args['dataset']))
     encodings_accounted = []
     names_accounted = []
@@ -48,14 +48,14 @@ except:
 image = cv2.imread(args['image'])
 rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-print('loading facial analysis...')
-binding_box = face_recognition.face_locations(rgb, model=args['detection_method'])
-encodings = face_recognition.face_encodings(rgb, binding_box)
+print('loading object analysis...')
+# binding_box = face_recognition.face_locations(rgb, model=args['detection_method'])
+# encodings = face_recognition.face_encodings(rgb, binding_box)
 
 names = []
 
 for encoding in encodings:
-    match_found = face_recognition.compare_faces(data['encodings'], encoding)
+#    match_found = face_recognition.compare_faces(data['encodings'], encoding)
     name = 'As yet unknown'
 
     if True in match_found:
