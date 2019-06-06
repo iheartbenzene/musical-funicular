@@ -1,5 +1,5 @@
 # musical-funicular
-A pokedex?
+A pokedex!
 
 ### Getting Started:
 This project uses `python 3.7.x.`
