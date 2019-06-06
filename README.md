@@ -11,7 +11,7 @@ Clone the repo:
 Install necessary packages:
 + `cd musical-funicilar && pip install -r requirements.txt`
 
-### Running the chatbot:
+### Running the chat feature:
 Assuming you've already cloned the repo:`python3 chatty.py`
 
 Full script:
