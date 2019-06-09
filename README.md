@@ -4,10 +4,12 @@
 ### Getting Started:
 This project uses `python 3.7.x.` and is currently designed to be run from a command-line interface.
 
+
+**Clone the repo:**
 ~~~
-Clone the repo:
-+ SSH: `git clone git@github.com:iheartbenzene/musical-funicular.git && cd musical-funicular`
-+ HTTPS: `git clone https://github.com/iheartbenzene/musical-funicular.git && cd musical-funicular`
+SSH: git clone git@github.com:iheartbenzene/musical-funicular.git && cd musical-funicular
+
+HTTPS: git clone https://github.com/iheartbenzene/musical-funicular.git && cd musical-funicular
 ~~~
 
 Install necessary packages:
