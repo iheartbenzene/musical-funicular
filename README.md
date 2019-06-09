@@ -23,7 +23,7 @@ Chat Agent: `$ python3 chatty.py && open localhost:5001` or `$ python chatty.py 
 
 Image Generation (using MNIST): `$ python3 artsy.py` or `$ python artsy.py`
 
-Object Classification (on CIFAR10): `$ python3 classy.py` or `$python classy.py`
+Object Classification (on CIFAR10): `$ python3 classy.py` or `$ python classy.py`
 
 Webscraper: `$ scrapy crawl redditbot`
 
