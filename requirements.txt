@@ -16,3 +16,4 @@ numba
 seaborn
 statsmodels
 imutils
+scrapy

@@ -23,6 +23,7 @@ Image Generation (using MNIST): `$ python3 artsy.py` or `$ python artsy.py`
 
 Object Classification (on CIFAR10): `$ python3 classy.py` or `$python classy.py`
 
+Webscraper: `$ scrapy crawl redditbot`
 
 ##### Resources:
 

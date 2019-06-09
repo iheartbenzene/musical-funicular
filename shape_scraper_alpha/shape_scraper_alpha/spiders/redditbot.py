@@ -21,3 +21,4 @@ class RedditbotSpider(scrapy.Spider):
                 'comments': item[3]
             }
             yield scraped_information
+            
