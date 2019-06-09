@@ -16,7 +16,7 @@ Install necessary packages:
 
 Chat: `$ python3 chatty.py` or `$ python chatty.py`
 
-GAN: `$ python3 artsy.py` or `$ python artsy.py`
+GAN (using MNIST): `$ python3 artsy.py` or `$ python artsy.py`
 
 Classification (on CIFAR10): `$ python3 classy.py` or `$python classy.py`
 
