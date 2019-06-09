@@ -16,8 +16,8 @@ Install necessary packages:
 
 Chat Agent: `$ python3 chatty.py` or `$ python chatty.py`
 + Full script:
-+ + `$ git clone git@github.com:iheartbenzene/musical-funicular.git && cd musical-funicular`
-+ + `$ python3 chatty.py && open localhost:5001`
+  ++ `$ git clone git@github.com:iheartbenzene/musical-funicular.git && cd musical-funicular`
+  ++ `$ python3 chatty.py && open localhost:5001`
 
 Image Generation (using MNIST): `$ python3 artsy.py` or `$ python artsy.py`
 
