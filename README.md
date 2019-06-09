@@ -6,18 +6,17 @@ This project uses `python 3.7.x.` and is currently designed to be run from a com
 
 
 **Clone the repo:**
-~~~
-SSH: git clone git@github.com:iheartbenzene/musical-funicular.git && cd musical-funicular
++ SSH: `$ git clone git@github.com:iheartbenzene/musical-funicular.git && cd musical-funicular`
 
-HTTPS: git clone https://github.com/iheartbenzene/musical-funicular.git && cd musical-funicular
-~~~
++ HTTPS: `$ git clone https://github.com/iheartbenzene/musical-funicular.git && cd musical-funicular`
+
 
 Install necessary packages:
 + `cd musical-funicilar && pip install -r requirements.txt`
 
 ### Running the modules:
 ~~~
-`$ git clone git@github.com:iheartbenzene/musical-funicular.git && cd musical-funicular`
+$ git clone git@github.com:iheartbenzene/musical-funicular.git && cd musical-funicular
 ~~~
 
 Chat Agent: `$ python3 chatty.py && open localhost:5001` or `$ python chatty.py && open localhost:5001`
