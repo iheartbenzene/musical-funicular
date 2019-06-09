@@ -1,71 +1,66 @@
-import cv2
-import os
 import numpy as np
-import face_recognition
-import dlib
-import argparse
-import pickle
+import matplotlib.pyplot as plt
 
-from imutils import paths
-from PIL import Image, ImageDraw
+from keras.datasets import cifar10
+from keras.models import Sequential
+from keras.layers import Dense, Flatten, Dropout
+from keras.layers.convolutional import Conv2D, MaxPooling2D
+from keras.contraints import maxnorm
+from keras.optimizers import SGD
+from keras.utils import np_utils
+from keras import backend as K
+from scipy.misc import toimage
 
-ap = argparse.ArgumentParser()
-ap.add_argument('-i', '--dataset', required=True, help='path to the input directory of faces and images')
-ap.add_argument('-e', '--encodings', required=True, help='path to serialized database of object encodings')
-ap.add_argument('-d', '--detection-method', type=str, default='cnn', help='object detection method: hog or cnn')
-args = vars(ap.parse_args())
+K.set_image_dim_ordering('th')
 
-try:
-    data = pickle.loads(open(args['encodings'], 'rb').read())
-    print('Image encodings loaded and ready to go!')
-except:
-    print('loading object analysis...')
-    image_paths = list(paths.list_images(args['dataset']))
-    encodings_accounted = []
-    names_accounted = []
+def initial_model(seed):
+    (train_x, train_y), (test_x, test_y) = cifar10.load_data()
 
-    for (i, image_path) in enumerate(image_paths):
-        print('loading image analysis {}/{}...'.format(i+1, len(image_paths)))
-        name = image_path.split(os.path.sep)[-2]
+    for i in range(9):
+        plt.subplot(330 + 1 + i)
+        plt.imshow(toimage(train_x[i]))
+    plt.show()
 
-        image = cv2.imread(image_path)
-        rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    train_x = train_x.astype('float32')
+    train_x = train_x / 255.0
+    test_x = test_x.astype('float32')
+    test_x = test_x / 255.0
 
-    binding_box = face_recognition.face_locations(rgb, model=args['detection_method'])
-    encodings = face_recognition.face_encodings(rgb, binding_box)
+    train_y = np_utils.to_categorical(train_y)
+    test_y = np_utils.to_categorical(test_y)
+    number_of_classes = test_y.shape[1]
 
-    for encoding in encodings:
-        encodings_accounted.append(encoding)
-        names_accounted.append(name)
+    model = Sequential()
+    model.add(Conv2D(32, (3, 3), input_shape = (3, 32, 32), padding = 'same', activation='relu', kernel_constraint = maxnorm(3)))
+    model.add(Dropout(0.2))
+    model.add(Conv2D(32, (3, 3), padding = 'same', activation='relu', kernel_constraint = maxnorm(3)))
+    model.add(MaxPooling2D(poolsize=(2, 2)))
+    model.add(Conv2D(64, (3, 3), padding = 'same', activation='relu', kernel_constraint = maxnorm(3)))
+    model.add(Dropout(0.2))
+    model.add(Conv2D(64, (3, 3), padding = 'same', activation='relu', kernel_constraint = maxnorm(3)))
+    model.add(MaxPooling2D(poolsize=(2, 2)))
+    model.add(Conv2D(128, (3, 3), padding = 'same', activation='relu', kernel_constraint = maxnorm(3)))
+    model.add(Dropout(0.2))
+    model.add(Conv2D(128, (3, 3), padding = 'same', activation='relu', kernel_constraint = maxnorm(3)))
+    model.add(MaxPooling2D(poolsize=(2, 2)))
+    model.add(Flatten())
+    model.add(Dropout(0.2))
+    model.add(Dense(1024, activation='relu', kernel_constraint=maxnorm(3)))
+    model.add(Dropout(0.2))
+    model.add(Dense(512, activation='relu', kernel_constraint=maxnorm(3)))
+    model.add(Dropout(0.2))
+    model.add(Dense(number_of_classes, activation='softmax'))
 
-    print('...delicious serial...')
-    data = {'encodings': encodings_accounted, 'names': names_accounted}
+    epochs = 25
+    learing_rate = 0.01
+    decay = learing_rate/epochs
+    sgd = SGD(lr=learing_rate, momentum=0.9, decay=decay, nesterov=False)
+    model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
+    print(model.summary())
 
-    with open(args['encodings'], 'wb') as f:
-        f.write(pickle.dump(data))
-    f.close()
-
-image = cv2.imread(args['image'])
-rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-
-print('loading object analysis...')
-# binding_box = face_recognition.face_locations(rgb, model=args['detection_method'])
-# encodings = face_recognition.face_encodings(rgb, binding_box)
-
-names = []
-
-for encoding in encodings:
-#    match_found = face_recognition.compare_faces(data['encodings'], encoding)
-    name = 'As yet unknown'
-
-    if True in match_found:
-        match_index = [i for (i, b) in enumerate(match_found) if b]
-        counts = {}
-
-        for i in match_index:
-            name = data['names'][i]
-            counts[name] = counts.get(name, 0) + 1
-
-        name = max(counts, key=counts.get)
-
-    names.append(name)
+    np.random.seed(seed)
+    model.fit(train_x, train_y, validation_data=(test_x, test_y), epochs=epochs, batch_size=64)
+    scores = model.evaluate(test_x, test_y, verbose=0)
+    print('Accuracy: %0.3f%%' % (scores[1]*100))
+    
+initial_model(7)
