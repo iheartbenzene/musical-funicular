@@ -1,25 +1,26 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import scipy
 
 from keras.datasets import cifar10
 from keras.models import Sequential
 from keras.layers import Dense, Flatten, Dropout
 from keras.layers.convolutional import Conv2D, MaxPooling2D
-from keras.contraints import maxnorm
+from keras.constraints import maxnorm
 from keras.optimizers import SGD
 from keras.utils import np_utils
 from keras import backend as K
-from scipy.misc import toimage
+# from scipy.misc import toimage
 
 K.set_image_dim_ordering('th')
 
 def initial_model(seed):
     (train_x, train_y), (test_x, test_y) = cifar10.load_data()
 
-    for i in range(9):
-        plt.subplot(330 + 1 + i)
-        plt.imshow(toimage(train_x[i]))
-    plt.show()
+    # for i in range(9):
+    #     plt.subplot(330 + 1 + i)
+    #     plt.imshow(scipy.misc.toimage(train_x[i]))
+    # plt.show()
 
     train_x = train_x.astype('float32')
     train_x = train_x / 255.0
@@ -34,15 +35,15 @@ def initial_model(seed):
     model.add(Conv2D(32, (3, 3), input_shape = (3, 32, 32), padding = 'same', activation='relu', kernel_constraint = maxnorm(3)))
     model.add(Dropout(0.2))
     model.add(Conv2D(32, (3, 3), padding = 'same', activation='relu', kernel_constraint = maxnorm(3)))
-    model.add(MaxPooling2D(poolsize=(2, 2)))
+    model.add(MaxPooling2D((2, 2)))
     model.add(Conv2D(64, (3, 3), padding = 'same', activation='relu', kernel_constraint = maxnorm(3)))
     model.add(Dropout(0.2))
     model.add(Conv2D(64, (3, 3), padding = 'same', activation='relu', kernel_constraint = maxnorm(3)))
-    model.add(MaxPooling2D(poolsize=(2, 2)))
+    model.add(MaxPooling2D((2, 2)))
     model.add(Conv2D(128, (3, 3), padding = 'same', activation='relu', kernel_constraint = maxnorm(3)))
     model.add(Dropout(0.2))
     model.add(Conv2D(128, (3, 3), padding = 'same', activation='relu', kernel_constraint = maxnorm(3)))
-    model.add(MaxPooling2D(poolsize=(2, 2)))
+    model.add(MaxPooling2D((2, 2)))
     model.add(Flatten())
     model.add(Dropout(0.2))
     model.add(Dense(1024, activation='relu', kernel_constraint=maxnorm(3)))
