@@ -1,5 +1,5 @@
 # musical-funicular
-`relevant description goes here`
+`Essentially to become a pokedex.`
 
 ### Getting Started:
 This project uses `python 3.7.x.` and is currently designed to be run from a command-line interface.
