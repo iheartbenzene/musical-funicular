@@ -43,7 +43,7 @@ graph = {'A': set(['B', 'C']),
          'B': set(['A', 'D', 'E']),
          'C': set(['A', 'F']),
          'D': set(['B']),
-         'E': set(['B', 'F'])
+         'E': set(['B', 'F']),
          'F': set(['C', 'E'])}
 
 #Traversal while keeping track of the nodes
@@ -55,9 +55,9 @@ def depth_first_search_1(graph, start):
         if vertex not in visited_node:
             visited_node.add(vertex)
             node_stack.extend(graph[vertex] - visited_node)
-        return visited_node
+    return visited_node
 
-# depth_first_search_1(graph, 'A')
+print('DFS1: ', depth_first_search_1(graph, 'A'))
 
 #Succinct traversal?
 #Implying a smaller space complexity?
@@ -69,7 +69,7 @@ def depth_first_search_2(graph, start, visited_node = None):
         depth_first_search_2(graph, next, visited_node)
     return visited_node
 
-# depth_first_search_2(graph, 'C')
+print('DFS2: ', depth_first_search_2(graph, 'C'))
 #
 def depth_first_search_paths_1(graph, start, goal):
     node_stack = [(start, [start])]
@@ -81,7 +81,7 @@ def depth_first_search_paths_1(graph, start, goal):
             else:
                 node_stack.append((next, path + [next]))
                 
-# list(depth_first_search_paths_1(graph, 'A', 'F'))
+print('DFSP1: ', list(depth_first_search_paths_1(graph, 'A', 'F')))
 
 def depth_first_search_paths_2(graph, start, goal, path = None):
     if path is None:
@@ -91,9 +91,9 @@ def depth_first_search_paths_2(graph, start, goal, path = None):
     for next in graph[start] - set(path):
         yield from depth_first_search_paths_2(graph, next, goal, path + [next])
         
-# list(depth_first_search_paths_2(graph, 'C', 'F'))
+print('DFSP2: ', list(depth_first_search_paths_2(graph, 'C', 'F')))
 
-def breadth_first_search_1(graph, start):
+def breadth_first_search(graph, start):
     visited_node = set()
     node_queue = [start]
     while node_queue:
@@ -103,5 +103,24 @@ def breadth_first_search_1(graph, start):
             node_queue.extend(graph[vertex])
     return visited_node
 
-breadth_first_search_1(graph, 'A')
+print('BFS: ', breadth_first_search_1(graph, 'A'))
 
+def breadth_first_search_paths(graph, start, goal):
+    node_queue = [(start, [start])]
+    while node_queue:
+        (vertex, path) = node_queue.pop(0)
+        for next in graph[vertex] - set(path):
+            if next == goal:
+                yield path + [next]
+            else:
+                node_queue.append((next, path + [next]))
+                
+print('BFSP: ', breadth_first_search_paths(graph, 'A', 'F'))
+
+def shortest_path(graph, start, goal):
+    try:
+        return next(breadth_first_search_paths(graph, start, goal))
+    except StopIteration:
+        return None
+    
+print('SP: ', shortest_path(graph, 'A', 'F'))
