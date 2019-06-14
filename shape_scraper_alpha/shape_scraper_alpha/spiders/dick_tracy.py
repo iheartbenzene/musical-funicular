@@ -41,14 +41,31 @@ def kruskal(graph):
 
 graph = {}
 
+#Traversal while keeping track of the nodes
 def depth_first_search_1(graph, start):
-    pass
+    visited_node = set()
+    node_stack = [start]
+    while node_stack:
+        vertex = node_stack.pop()
+        if vertex not in visited_node:
+            visited_node.add(vertex)
+            node_stack.extend(graph[vertex] - visited_node)
+        return visited_node
 
-def depth_first_search_2(graph, start, visited = None):
-    pass
+#Succinct traversal?
+#Implying a smaller space complexity?
+def depth_first_search_2(graph, start, visited_node = None):
+    if visited_node is None:
+        visited_node = set()
+    visited_node.add(start)
+    for next in graph[start] - visited_node:
+        depth_first_search_2(graph, next, visited_node)
+    return visited_node
 
+#
 def depth_first_search_paths_1(graph, start, goal):
-    pass
+    node_stack = [(start, [start])]
+    while node_stack
 
 def depth_first_search_paths_2(graph, start, goal, path = None):
     pass
