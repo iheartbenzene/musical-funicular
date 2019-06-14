@@ -32,7 +32,11 @@ def kruskal(graph):
         #add logging for debugging
     
     for edge in edges:
-        w1, v1, v2 = edge
-        if locate(v1) != locate(v2):
-            pass
-        #YOU ARE HERE
+        weight, vertex_1, vertex_2 = edge
+        if locate(vertex_1) != locate(vertex_2):
+            unite(vertex1, vertex2)
+            min_span_tree.add(edge)
+            
+    return sorted(min_span_tree)
+
+graph = {}
