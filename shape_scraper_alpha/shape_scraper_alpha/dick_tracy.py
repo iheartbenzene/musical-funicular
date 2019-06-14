@@ -94,4 +94,14 @@ def depth_first_search_paths_2(graph, start, goal, path = None):
 # list(depth_first_search_paths_2(graph, 'C', 'F'))
 
 def breadth_first_search_1(graph, start):
-    pass
+    visited_node = set()
+    node_queue = [start]
+    while node_queue:
+        vertex = node_queue.pop(0)
+        if vertex not in visited_node:
+            visited_node.add(vertex)
+            node_queue.extend(graph[vertex])
+    return visited_node
+
+breadth_first_search_1(graph, 'A')
+
