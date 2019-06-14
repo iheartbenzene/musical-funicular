@@ -40,3 +40,18 @@ def kruskal(graph):
     return sorted(min_span_tree)
 
 graph = {}
+
+def depth_first_search_1(graph, start):
+    pass
+
+def depth_first_search_2(graph, start, visited = None):
+    pass
+
+def depth_first_search_paths_1(graph, start, goal):
+    pass
+
+def depth_first_search_paths_2(graph, start, goal, path = None):
+    pass
+
+def breadth_first_search_1(graph, start):
+    pass
