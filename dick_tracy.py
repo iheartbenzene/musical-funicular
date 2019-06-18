@@ -1,56 +1,56 @@
 from collections import defaultdict
 from decimal import Decimal
 
-graph = {'vertex': ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
-         'edges': set([(7, 'A', 'B'), (7, 'B', 'A'), (5, 'A', 'D'), 
-                       (5, 'D', 'A'), (9, 'B', 'D'), (9, 'D', 'B'),
-                       (8, 'B', 'C'), (8, 'C', 'B'), (7, 'B', 'E'),
-                       (7, 'E', 'B'), (5, 'C', 'E'), (5, 'E', 'C'),
-                       (7, 'D', 'E'), (7, 'E', 'D'), (6, 'D', 'F'),
-                       (6, 'F', 'D'), (8, 'E', 'F'), (8, 'F', 'E'),
-                       (9, 'E', 'G'), (9, 'G', 'E'), (11, 'F', 'G'),
-                       (11, 'G', 'F')])}
+# graph = {'vertex': ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
+#          'edges': set([(7, 'A', 'B'), (7, 'B', 'A'), (5, 'A', 'D'), 
+#                        (5, 'D', 'A'), (9, 'B', 'D'), (9, 'D', 'B'),
+#                        (8, 'B', 'C'), (8, 'C', 'B'), (7, 'B', 'E'),
+#                        (7, 'E', 'B'), (5, 'C', 'E'), (5, 'E', 'C'),
+#                        (7, 'D', 'E'), (7, 'E', 'D'), (6, 'D', 'F'),
+#                        (6, 'F', 'D'), (8, 'E', 'F'), (8, 'F', 'E'),
+#                        (9, 'E', 'G'), (9, 'G', 'E'), (11, 'F', 'G'),
+#                        (11, 'G', 'F')])}
 
-origin = dict()
-rank = dict()
+# origin = dict()
+# rank = dict()
 
-def set_set(vertex):
-    origin[vertex] = vertex
-    rank[vertex] = 0
+# def set_set(vertex):
+#     origin[vertex] = vertex
+#     rank[vertex] = 0
     
-def locate(vertex):
-    if origin[vertex] != vertex:
-        origin[vertex] = locate(origin[vertex])
-    return origin(vertex)
+# def locate(vertex):
+#     if origin[vertex] != vertex:
+#         origin[vertex] = locate(origin[vertex])
+#     return origin(vertex)
 
-def unite(vertex1, vertex2):
-    root1 = locate(vertex1)
-    root2 = locate(vertex2)
-    if root1 != root2:
-        if rank[root1] > rank[root2]:
-            origin[root2] = root1
-        else:
-            origin[root1] = root2
-        if rank[root1] == rank[root2]:
-            rank[root2] += 1
+# def unite(vertex1, vertex2):
+#     root1 = locate(vertex1)
+#     root2 = locate(vertex2)
+#     if root1 != root2:
+#         if rank[root1] > rank[root2]:
+#             origin[root2] = root1
+#         else:
+#             origin[root1] = root2
+#         if rank[root1] == rank[root2]:
+#             rank[root2] += 1
 
-def kruskal(graph):
-    for vertex in graph['vertex']:
-        set_set(vertex)
-        min_span_tree = set()
-        edges = list(graph['edges'])
-        edge.sort()
-        #add logging for debugging
+# def kruskal(graph):
+#     for vertex in graph['vertex']:
+#         set_set(vertex)
+#         min_span_tree = set()
+#         edges = list(graph['edges'])
+#         edges.sort()
+#         #add logging for debugging
     
-    for edge in edges:
-        weight, vertex_1, vertex_2 = edge
-        if locate(vertex_1) != locate(vertex_2):
-            unite(vertex1, vertex2)
-            min_span_tree.add(edge)
+#     for edge in edges:
+#         weight, vertex_1, vertex_2 = edge
+#         if locate(vertex_1) != locate(vertex_2):
+#             unite(vertex1, vertex2)
+#             min_span_tree.add(edge)
             
-    return sorted(min_span_tree)
+#     return sorted(min_span_tree)
 
-print(kruskal(graph))
+# print(kruskal(graph))
 
 graph = {'A': set(['B', 'C']),
          'B': set(['A', 'D', 'E']),
@@ -153,12 +153,12 @@ class Edge:
 class Graph:
     def __init__(self):
         self.nodes = set()
-        self.edges = dict()
+        self.edges = {}
         
-    def plus_node(self, node):
+    def add_node(self, node):
         self.nodes.add(node)
         
-    def plus_edge(self, from_node, to_node, length):
+    def add_edge(self, from_node, to_node, length):
         edge = Edge(to_node, length)
         if from_node.label in self.edges:
             from_node_edges = self.edges[from_node.label]
@@ -206,3 +206,52 @@ def dijkstra(graph, source):
                     previous[vertex.to_node] = radius
                     
     return distance, previous
+
+def to_array(previous, from_node):
+    previous_node = previous[from_node]
+    route = [from_node.label]
+    while previous_node != inf:
+        route.append(previous_node.label)
+        temp_node = previous_node
+        previous_node = previous[temp_node]
+        
+    route.reverse()
+    return route
+
+graph = Graph()
+node_a = Node('A')
+node_b = Node('B')
+node_c = Node('C')
+node_d = Node('D')
+node_e = Node('E')
+node_f = Node('F')
+node_g = Node('G')
+
+graph.add_node(node_a)
+graph.add_node(node_b)
+graph.add_node(node_c)
+graph.add_node(node_d)
+graph.add_node(node_e)
+graph.add_node(node_f)
+graph.add_node(node_g)
+
+graph.add_edge(node_a, node_b, 7)
+graph.add_edge(node_a, node_d, 5)
+graph.add_edge(node_b, node_c, 8)
+graph.add_edge(node_b, node_d, 9)
+graph.add_edge(node_b, node_e, 7)
+graph.add_edge(node_c, node_e, 5)
+graph.add_edge(node_d, node_e, 7)
+graph.add_edge(node_d, node_f, 6)
+graph.add_edge(node_e, node_f, 8)
+graph.add_edge(node_e, node_g, 9)
+graph.add_edge(node_f, node_g, 11)
+
+distance, previous = dijkstra(graph, node_a)
+
+print(node_a.label)
+print(node_g.label)
+print(str(distance[node_g]))
+
+print("The quickest path from {} to {} is [{}] with a distance of {}".format(node_a.label, node_g.label,
+    " -> ".join(to_array(previous, node_g)), str(distance[node_g])))
