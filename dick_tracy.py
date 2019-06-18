@@ -1,43 +1,56 @@
 from collections import defaultdict
+from decimal import Decimal
 
-# origin = dict()
-# rank = dict()
+graph = {'vertex': ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
+         'edges': set([(7, 'A', 'B'), (7, 'B', 'A'), (5, 'A', 'D'), 
+                       (5, 'D', 'A'), (9, 'B', 'D'), (9, 'D', 'B'),
+                       (8, 'B', 'C'), (8, 'C', 'B'), (7, 'B', 'E'),
+                       (7, 'E', 'B'), (5, 'C', 'E'), (5, 'E', 'C'),
+                       (7, 'D', 'E'), (7, 'E', 'D'), (6, 'D', 'F'),
+                       (6, 'F', 'D'), (8, 'E', 'F'), (8, 'F', 'E'),
+                       (9, 'E', 'G'), (9, 'G', 'E'), (11, 'F', 'G'),
+                       (11, 'G', 'F')])}
 
-# def set_set(vertex):
-#     origin[vertex] = vertex
-#     rank[vertex] = 0
+origin = dict()
+rank = dict()
+
+def set_set(vertex):
+    origin[vertex] = vertex
+    rank[vertex] = 0
     
-# def locate(vertex):
-#     if origin[vertex] != vertex:
-#         origin[vertex] = locate(origin[vertex])
-#     return origin(vertex)
+def locate(vertex):
+    if origin[vertex] != vertex:
+        origin[vertex] = locate(origin[vertex])
+    return origin(vertex)
 
-# def unite(vertex1, vertex2):
-#     root1 = locate(vertex1)
-#     root2 = locate(vertex2)
-#     if root1 != root2:
-#         if rank[root1] > rank[root2]:
-#             origin[root2] = root1
-#         else:
-#             origin[root1] = root2
-#         if rank[root1] == rank[root2]:
-#             rank[root2] += 1
+def unite(vertex1, vertex2):
+    root1 = locate(vertex1)
+    root2 = locate(vertex2)
+    if root1 != root2:
+        if rank[root1] > rank[root2]:
+            origin[root2] = root1
+        else:
+            origin[root1] = root2
+        if rank[root1] == rank[root2]:
+            rank[root2] += 1
 
-# def kruskal(graph):
-#     for vertex in graph['vertex']:
-#         set_set(vertex)
-#         min_span_tree = set()
-#         edges = list(graph['edges'])
-#         edge.sort()
-#         #add logging for debugging
+def kruskal(graph):
+    for vertex in graph['vertex']:
+        set_set(vertex)
+        min_span_tree = set()
+        edges = list(graph['edges'])
+        edge.sort()
+        #add logging for debugging
     
-#     for edge in edges:
-#         weight, vertex_1, vertex_2 = edge
-#         if locate(vertex_1) != locate(vertex_2):
-#             unite(vertex1, vertex2)
-#             min_span_tree.add(edge)
+    for edge in edges:
+        weight, vertex_1, vertex_2 = edge
+        if locate(vertex_1) != locate(vertex_2):
+            unite(vertex1, vertex2)
+            min_span_tree.add(edge)
             
-#     return sorted(min_span_tree)
+    return sorted(min_span_tree)
+
+print(kruskal(graph))
 
 graph = {'A': set(['B', 'C']),
          'B': set(['A', 'D', 'E']),
@@ -103,7 +116,7 @@ def breadth_first_search(graph, start):
             node_queue.extend(graph[vertex])
     return visited_node
 
-print('BFS: ', breadth_first_search_1(graph, 'A'))
+print('BFS: ', breadth_first_search(graph, 'A'))
 
 def breadth_first_search_paths(graph, start, goal):
     node_queue = [(start, [start])]
@@ -124,3 +137,72 @@ def shortest_path(graph, start, goal):
         return None
     
 print('SP: ', shortest_path(graph, 'A', 'F'))
+
+# dijkstra
+
+class Node:
+    def __init__(self, label):
+        self.label = label
+        
+        
+class Edge:
+    def __init__(self, to_node, length):
+        self.to_node = to_node
+        self.length = length
+        
+class Graph:
+    def __init__(self):
+        self.nodes = set()
+        self.edges = dict()
+        
+    def plus_node(self, node):
+        self.nodes.add(node)
+        
+    def plus_edge(self, from_node, to_node, length):
+        edge = Edge(to_node, length)
+        if from_node.label in self.edges:
+            from_node_edges = self.edges[from_node.label]
+        else:
+            self.edges[from_node.label] = dict()
+            from_node_edges = self.edges[from_node.label]
+        from_node_edges[to_node.label] = edge
+
+
+        
+def minimum_distance(s, distance):
+    minimum_node = None
+    for node in s:
+        if minimum_node == None:
+            minimum_node = node
+        elif distance[node] < distance[minimum_node]:
+            minimum_node = node
+        
+    return minimum_node
+    
+
+inf = Decimal('Infinity')
+
+def dijkstra(graph, source):
+    s = set()
+    distance = {}
+    previous = {}
+    
+    for vertex in graph.nodes:
+        distance[vertex] = inf
+        previous[vertex] = inf
+        s.add(vertex)
+        
+    distance[source] = 0
+    
+    while s:
+        radius = minimum_distance(s, distance)
+        s.remove(radius)
+        
+        if radius.label in graph.edges:
+            for _, vertex in graph.edges[radius.label].items():
+                alternate = distance[radius] + vertex.length
+                if alternate < distance[vertex.to_node]:
+                    distance[vertex.to_node] = alternate
+                    previous[vertex.to_node] = radius
+                    
+    return distance, previous
