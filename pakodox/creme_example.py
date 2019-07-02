@@ -26,3 +26,10 @@ size_of_batch = arguments['batch_size']
 image_paths = list(path.list_images(arguments['dataset']))
 random.seed(42)
 random.shuffle(image_paths)
+
+labels = [point.split(os.path.sep)[-1].split('.') for point in image_paths]
+label_encode = LabelEncoder()
+labels = label_encode.fit_transform(labels)
+
+columns = ['feature_{}'.format(i) for i in range (0, 7 * 7 * 2048)]
+columns = ['class'] + columns
