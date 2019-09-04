@@ -32,7 +32,7 @@ def initial_model(seed):
     number_of_classes = test_y.shape[1]
 
     model = Sequential()
-    model.add(Conv2D(32, (3, 3), input_shape = (3, 32, 32), padding = 'same', activation='relu', kernel_constraint = maxnorm(3)))
+    model.add(Conv2D(32, (3, 3), input_shape = (32, 32, 3), padding = 'same', activation='relu', kernel_constraint = maxnorm(3)))
     model.add(Dropout(0.2))
     model.add(Conv2D(32, (3, 3), padding = 'same', activation='relu', kernel_constraint = maxnorm(3)))
     model.add(MaxPooling2D((2, 2), dim_ordering='th'))
