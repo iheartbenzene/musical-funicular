@@ -12,7 +12,7 @@ from keras.utils import np_utils
 from keras import backend as K
 # from scipy.misc import toimage
 
-K.set_image_dim_ordering('th')
+# K.set_image_dim_ordering('th')
 
 def initial_model(seed):
     (train_x, train_y), (test_x, test_y) = cifar10.load_data()
@@ -35,15 +35,15 @@ def initial_model(seed):
     model.add(Conv2D(32, (3, 3), input_shape = (3, 32, 32), padding = 'same', activation='relu', kernel_constraint = maxnorm(3)))
     model.add(Dropout(0.2))
     model.add(Conv2D(32, (3, 3), padding = 'same', activation='relu', kernel_constraint = maxnorm(3)))
-    model.add(MaxPooling2D((2, 2)))
+    model.add(MaxPooling2D((2, 2), dim_ordering='th'))
     model.add(Conv2D(64, (3, 3), padding = 'same', activation='relu', kernel_constraint = maxnorm(3)))
     model.add(Dropout(0.2))
     model.add(Conv2D(64, (3, 3), padding = 'same', activation='relu', kernel_constraint = maxnorm(3)))
-    model.add(MaxPooling2D((2, 2)))
+    model.add(MaxPooling2D((2, 2), dim_ordering='th'))
     model.add(Conv2D(128, (3, 3), padding = 'same', activation='relu', kernel_constraint = maxnorm(3)))
     model.add(Dropout(0.2))
     model.add(Conv2D(128, (3, 3), padding = 'same', activation='relu', kernel_constraint = maxnorm(3)))
-    model.add(MaxPooling2D((2, 2)))
+    model.add(MaxPooling2D((2, 2), dim_ordering='th'))
     model.add(Flatten())
     model.add(Dropout(0.2))
     model.add(Dense(1024, activation='relu', kernel_constraint=maxnorm(3)))
