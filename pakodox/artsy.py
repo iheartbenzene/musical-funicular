@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import subprocess
 
 # from tensorflow.python.keras.models import Sequential
 # from tensorflow.python.keras.layers import BatchNormalization, Dense, Flatten, Input, LeakyReLU, Reshape
@@ -124,8 +125,10 @@ class GAN():
                 axis[i, j].imshow(generate_images[counts, :, :, 0], cmap='gray')
                 axis[i, j].axis('off')
                 counts += 1
-                
-        figure.savefig('gan_image/mnist_%d.png' % epoch)
+        try:       
+            figure.savefig('gan_image/mnist_%d.png' % epoch)
+        except:
+            pass
         plt.close()        
         
 if __name__ == '__main__':
