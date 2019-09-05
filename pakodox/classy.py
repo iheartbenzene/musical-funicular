@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy
+import datetime
 
 from keras.datasets import cifar10
 from keras.models import Sequential
@@ -63,6 +64,7 @@ def initial_model(seed):
     model.fit(train_x, train_y, validation_data=(test_x, test_y), epochs=epochs, batch_size=64)
     scores = model.evaluate(test_x, test_y, verbose=0)
     print('Accuracy: %0.3f%%' % (scores[1]*100))
+    print(datetime.datetime.now().strftime('%Y%m%d-%H%m'))
     
 
 try:
