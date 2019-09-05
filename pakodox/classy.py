@@ -4,7 +4,7 @@ import scipy
 import datetime
 
 from keras.datasets import cifar10
-from keras.models import Sequential
+from keras.models import Sequential, load_model, save_model
 from keras.layers import Dense, Flatten, Dropout
 from keras.layers.convolutional import Conv2D, MaxPooling2D
 from keras.constraints import maxnorm
@@ -76,4 +76,5 @@ except:
     print("\n Fitting Classification Model... \n")
     initial_model(7)
     print("\n Saving classification model to disk... \n")
-    model.save('model/classy.h5')
+    # model.save('model/classy.h5')
+    save_model('model/classy.h5')
