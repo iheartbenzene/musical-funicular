@@ -69,7 +69,7 @@ try:
     model = load_model('model/classy.h5')
     print("\n Loaded Classification Module... \n")
 except:
-    print("\n Fitting Model... \n")
+    print("\n Fitting Classification Model... \n")
     initial_model(7)
-    print("\n Saving model to disk... \n")
+    print("\n Saving classification model to disk... \n")
     model.save('model/classy.h5')

@@ -138,7 +138,7 @@ try:
     model = load_model('model/artsy.h5')
     print("\n Loaded Image Generation Module... \n")
 except:
-    print("\n Fitting Model... \n")
+    print("\n Fitting Image Generation Model... \n")
     gan.training(120000, batch_size=32, save_interval=800)    
-    print("\n Saving model to disk... \n")
+    print("\n Saving image generation model to disk... \n")
     model.save('model/artsy.h5')
