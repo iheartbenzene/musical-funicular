@@ -52,7 +52,7 @@ def initial_model(seed):
     model.add(Dropout(0.2))
     model.add(Dense(number_of_classes, activation='softmax'))
 
-    epochs = 25
+    epochs = 50
     learing_rate = 0.01
     decay = learing_rate/epochs
     sgd = SGD(lr=learing_rate, momentum=0.9, decay=decay, nesterov=False)
