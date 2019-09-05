@@ -66,7 +66,9 @@ def initial_model(seed):
     
 
 try:
-    model = load_model('model/classy.h5')
+    classification_model = None
+    model = Sequential()
+    classification_module = load_model('model/classy.h5')
     print("\n Loaded Classification Module... \n")
 except:
     print("\n Fitting Classification Model... \n")
