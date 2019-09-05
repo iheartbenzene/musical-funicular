@@ -64,4 +64,12 @@ def initial_model(seed):
     scores = model.evaluate(test_x, test_y, verbose=0)
     print('Accuracy: %0.3f%%' % (scores[1]*100))
     
-initial_model(7)
+
+try:
+    model = load_model('model/classy.h5')
+    print("\n Loaded Classification Module... \n")
+except:
+    print("\n Fitting Model... \n")
+    initial_model(7)
+    print("\n Saving model to disk... \n")
+    model.save('model/classy.h5')

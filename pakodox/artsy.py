@@ -128,9 +128,17 @@ class GAN():
         try:       
             figure.savefig('gan_image/mnist_%d.png' % epoch)
         except:
+            # TODO Fix the image generation
             pass
         plt.close()        
         
 if __name__ == '__main__':
     gan = GAN()
-    gan.training(120000, batch_size=32, save_interval=800)
+try:
+    model = load_model('model/artsy.h5')
+    print("\n Loaded Image Generation Module... \n")
+except:
+    print("\n Fitting Model... \n")
+    gan.training(120000, batch_size=32, save_interval=800)    
+    print("\n Saving model to disk... \n")
+    model.save('model/artsy.h5')
