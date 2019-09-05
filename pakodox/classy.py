@@ -2,6 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy
 import datetime
+import os
+import h5py
 
 from keras.datasets import cifar10
 from keras.models import Sequential, load_model, save_model
@@ -53,8 +55,8 @@ def initial_model(seed):
     model.add(Dropout(0.2))
     model.add(Dense(number_of_classes, activation='softmax'))
 
-    # epochs = 50
-    epochs = 3
+    epochs = 50
+    # epochs = 1
     learing_rate = 0.01
     decay = learing_rate/epochs
     sgd = SGD(lr=learing_rate, momentum=0.9, decay=decay, nesterov=False)
@@ -66,16 +68,14 @@ def initial_model(seed):
     scores = model.evaluate(test_x, test_y, verbose=0)
     print('Accuracy: %0.3f%%' % (scores[1]*100))
     print(datetime.datetime.now().strftime('%Y%m%d-%H%m'))
-    
+    model.save(filepath=os.path.abspath('model/classy.h5'), overwrite=True)
 
 try:
     classification_model = None
     model = Sequential()
-    classification_module = load_model('model/classy.h5')
+    classification_module = load_model(os.path.abspath('model/classy.h5'))
     print("\n Loaded Classification Module... \n")
 except:
     print("\n Fitting Classification Model... \n")
     initial_model(7)
     print("\n Saving classification model to disk... \n")
-    # model.save('model/classy.h5')
-    save_model('model/classy.h5')

@@ -5,6 +5,7 @@ import subprocess
 # from tensorflow.python.keras.models import Sequential
 # from tensorflow.python.keras.layers import BatchNormalization, Dense, Flatten, Input, LeakyReLU, Reshape
 
+from os.path import abspath
 from keras.models import Sequential, Model
 from keras.layers import BatchNormalization, Dense, Flatten, Input, LeakyReLU, Reshape
 from keras.optimizers import Adam
@@ -126,7 +127,7 @@ class GAN():
                 axis[i, j].axis('off')
                 counts += 1
         try:       
-            figure.savefig('gan_image/mnist_%d.png' % epoch)
+            figure.savefig(abspath('gan_image/mnist_%d.png') % epoch)
         except:
             # TODO Fix the image generation
             pass
@@ -141,4 +142,4 @@ except:
     print("\n Fitting Image Generation Model... \n")
     gan.training(120000, batch_size=32, save_interval=800)    
     print("\n Saving image generation model to disk... \n")
-    model.save('model/artsy.h5')
+    model.save(abspath('model/artsy.h5'))
