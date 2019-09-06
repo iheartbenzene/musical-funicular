@@ -8,6 +8,7 @@ import argparse
 import pickle
 import random
 import os
+import h5py
 
 from sklearn.preprocessing import LabelEncoder
 from keras.applications import ResNet50, imagenet_utils

@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import subprocess
+import h5py
 
 # from tensorflow.python.keras.models import Sequential
 # from tensorflow.python.keras.layers import BatchNormalization, Dense, Flatten, Input, LeakyReLU, Reshape
