@@ -108,6 +108,15 @@ class GAN():
             
             if epoch % save_interval == 0:
                 self.save_the_image(epoch)
+    
+    def load_gan_model(self):
+        pass
+                    
+    def save_and_train_gan_model(self):
+        model=self.training(epochs=120000, batch_size=128, save_interval=800)
+        print("\n Saving image generation model to disk... \n")
+        model.save(abspath('model/artsy.h5'))
+        pass
                 
     def save_the_image(self, epoch):
         p, q = 5, 5
@@ -136,11 +145,12 @@ class GAN():
         
 if __name__ == '__main__':
     gan = GAN()
-try:
-    model = load_model('model/artsy.h5')
-    print("\n Loaded Image Generation Module... \n")
-except:
-    print("\n Fitting Image Generation Model... \n")
-    gan.training(120000, batch_size=32, save_interval=800)    
-    print("\n Saving image generation model to disk... \n")
-    model.save(abspath('model/artsy.h5'))
+    gan.save_and_train_gan_model()
+
+# try:
+#     model = load_model('model/artsy.h5')
+#     print("\n Loaded Image Generation Module... \n")
+# except:
+#     print("\n Fitting Image Generation Model... \n")
+#     gan.training(120000, batch_size=128, save_interval=800)    
+#     print("\n Saving image generation model to disk... \n")
