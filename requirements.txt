@@ -16,5 +16,5 @@ numba
 seaborn
 statsmodels
 imutils
-scrapy
+selenium
 django

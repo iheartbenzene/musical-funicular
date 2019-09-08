@@ -108,6 +108,8 @@ class GAN():
             
             if epoch % save_interval == 0:
                 self.save_the_image(epoch)
+                
+        return model
     
     def load_gan_model(self):
         pass
@@ -116,7 +118,6 @@ class GAN():
         model=self.training(epochs=120000, batch_size=128, save_interval=800)
         print("\n Saving image generation model to disk... \n")
         model.save(abspath('model/artsy.h5'))
-        pass
                 
     def save_the_image(self, epoch):
         p, q = 5, 5
