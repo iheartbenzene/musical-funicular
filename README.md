@@ -1,5 +1,5 @@
 # musical-funicular
-`A Pocket Dictionary`
+`A Visual Pocket Dictionary`
 
 On GitPod.io: https://gitpod.io/#https://github.com/iheartbenzene/musical-funicular
 
