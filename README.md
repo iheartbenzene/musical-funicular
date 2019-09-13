@@ -1,5 +1,5 @@
 # musical-funicular
-`A Visual Dictionary`
+`The Pakodox`
 
 On GitPod.io: https://gitpod.io/#https://github.com/iheartbenzene/musical-funicular
 
@@ -31,8 +31,4 @@ Webscraper: `$ scrapy crawl redditbot`
 
 ##### Resources:
 
-+ `Books library:` https://www.gutenberg.org/
-
-+ `Images library:`
-
-`...the pocke-dicts`
+`Helpful links here`
