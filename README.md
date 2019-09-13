@@ -1,8 +1,8 @@
     
-[![Known Vulnerabilities](https://snyk.io//test/github/iheartbenzene/musical-funicular/badge.svg?targetFile=requirements.txt)](https://snyk.io//test/github/iheartbenzene/musical-funicular?targetFile=requirements.txt)
-
 # musical-funicular
 `The Pakodox`
+
+[![Known Vulnerabilities](https://snyk.io//test/github/iheartbenzene/musical-funicular/badge.svg?targetFile=requirements.txt)](https://snyk.io//test/github/iheartbenzene/musical-funicular?targetFile=requirements.txt)
 
 On GitPod.io: https://gitpod.io/#https://github.com/iheartbenzene/musical-funicular
 
