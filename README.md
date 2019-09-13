@@ -1,3 +1,6 @@
+    
+[![Known Vulnerabilities](https://snyk.io//test/github/iheartbenzene/musical-funicular/badge.svg?targetFile=requirements.txt)](https://snyk.io//test/github/iheartbenzene/musical-funicular?targetFile=requirements.txt)
+
 # musical-funicular
 `The Pakodox`
 
