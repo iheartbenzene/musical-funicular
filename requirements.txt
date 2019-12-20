@@ -17,4 +17,3 @@ seaborn
 statsmodels
 imutils
 selenium
-django
